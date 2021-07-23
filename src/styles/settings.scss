@@ -1,1 +1,26 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Oswald&display=swap");
+
 $base-size: 12px;
+
+/* Colors */
+$color-black: #010202;
+$color-white: #fff;
+$color-success: #009432;
+$color-error: #ff0000;
+$color-main: #e6af38;
+$color-grey: #817e7e;
+
+$color-text-dark: #4d4c4c;
+$color-text-light: #f5f5f5;
+
+$color-background-light: #f4f5f7;
+$color-background-dark: #292929;
+$color-background-color: #f2c460;
+
+/* Fonts */
+$font-header: "Oswald", sans-serif;
+$font-text: "Roboto", sans-serif;
+
+/* Transition */
+$transition: all 0.5s;

@@ -1,22 +1,31 @@
-import React from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import { Provider } from 'react-redux';
+import React from "react";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { Provider } from "react-redux";
 
-import { createMuiTheme, StylesProvider, ThemeProvider } from '@material-ui/core/styles';
-import { CssBaseline } from '@material-ui/core';
+import {
+  createMuiTheme,
+  StylesProvider,
+  ThemeProvider,
+} from "@material-ui/core/styles";
+import { CssBaseline } from "@material-ui/core";
 
-import { store } from './redux/store';
+import { store } from "./redux/store";
 
-import { MainLayout } from './components/layout/MainLayout/MainLayout';
-import { Homepage } from './components/views/Homepage/Homepage';
-import { Post } from './components/views/Post/Post';
-import { PostEdit } from './components/views/PostEdit/PostEdit';
-import { PostAdd } from './components/views/PostAdd/PostAdd';
-import { NotFound } from './components/views/NotFound/NotFound';
+import { MainLayout } from "./components/layout/MainLayout/MainLayout";
+import { Homepage } from "./components/views/Homepage/Homepage";
+import { Booking } from "./components/views/Booking/Booking";
+import { BookingsList } from "./components/views/BookingsList/BookingsList";
+import { NewBooking } from "./components/views/NewBooking/NewBooking";
+import { EditBooking } from "./components/views/EditBooking/EditBooking";
+import { EditTrip } from "./components/views/EditTrip/EditTrip";
+import { Trip } from "./components/views/Trip/Trip";
+import { TripsList } from "./components/views/TripsList/TripsList";
+import { NewTrip } from "./components/views/NewTrip/NewTrip";
+import { NotFound } from "./components/views/NotFound/NotFound";
 
 const theme = createMuiTheme({
   palette: {
-    primary: { main: '#2B4C6F' },
+    primary: { main: "#2B4C6F" },
   },
 });
 
@@ -28,11 +37,16 @@ const App = () => (
           <CssBaseline />
           <MainLayout>
             <Switch>
-              <Route exact path='/' component={Homepage} />
-              <Route exact path='/post/add' component={PostAdd} />
-              <Route exact path='/post/:id' component={Post} />
-              <Route exact path='/post/:id/edit' component={PostEdit} />
-              <Route path='*' component={NotFound} />
+              <Route exact path="/" component={Homepage} />
+              <Route exact path="/bookings" component={BookingsList} />
+              <Route exact path="/bookings/add" component={NewBooking} />
+              <Route exact path="/bookings/:id" component={Booking} />
+              <Route exact path="/bookings/:id/edit" component={EditBooking} />
+              <Route exact path="/trips" component={TripsList} />
+              <Route exact path="/trips/add" component={NewTrip} />
+              <Route exact path="/trips/:id" component={Trip} />
+              <Route exact path="/trips/:id/edit" component={EditTrip} />
+              <Route path="*" component={NotFound} />
             </Switch>
           </MainLayout>
         </ThemeProvider>
