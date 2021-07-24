@@ -1,4 +1,44 @@
-@import '../../../styles/settings.scss';
+@import "../../../styles/settings.scss";
+@import "../../../styles/mixins.scss";
 
-// .root {
-// }
+.root {
+  background-color: $color-background-dark;
+  color: $color-text-light;
+  .container {
+    @include wrapper;
+    position: relative;
+    @include container;
+    .logo {
+      max-width: 100px;
+      max-height: 50px;
+      img {
+        @include image;
+      }
+    }
+
+    .hamburger {
+      display: none;
+    }
+  }
+}
+.smallScreen {
+  display: none;
+  flex-direction: column !important;
+  margin-bottom: 0;
+  padding: 0;
+}
+@media (max-width: 585px) {
+  .bigScreen {
+    display: none;
+  }
+  .hamburger {
+    display: block !important;
+    padding: $base-size;
+    .icon {
+      font-size: $base-size * 2;
+    }
+  }
+  .smallScreen {
+    display: block !important;
+  }
+}

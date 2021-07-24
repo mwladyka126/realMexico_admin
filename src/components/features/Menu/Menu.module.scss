@@ -1,0 +1,33 @@
+@import "../../../styles/settings.scss";
+@import "../../../styles/mixins.scss";
+
+.navList {
+  list-style-type: none;
+  @include wrapper;
+  li {
+    padding: $base-size;
+    text-align: center;
+    .link {
+      @include link;
+      color: $color-text-light;
+      font-size: large;
+      font-weight: 600;
+      span {
+        color: $color-main;
+      }
+      &:hover {
+        border-bottom: solid $color-main 3px;
+      }
+    }
+    .icon {
+      @extend .link;
+      color: $color-main;
+      &:hover {
+        border-bottom: none;
+        transform: scale(1.5);
+        transition: $transition;
+        color: $color-text-light;
+      }
+    }
+  }
+}

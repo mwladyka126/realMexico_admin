@@ -1,37 +1,45 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
+import { Menu } from "./../../features/Menu/Menu";
 
-import clsx from 'clsx';
+import clsx from "clsx";
 
-// import { connect } from 'react-redux';
-// import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
+import styles from "./Header.module.scss";
 
-import styles from './Header.module.scss';
+const Component = ({ className, children }) => {
+  const [menu, setMenu] = useState(false);
+  const showMenu = () => setMenu(!menu);
 
-const Component = ({className, children}) => (
-  <div className={clsx(className, styles.root)}>
-    <h2>Header</h2>
-    {children}
-  </div>
-);
+  return (
+    <div className={clsx(className, styles.root)}>
+      <div className={styles.container}>
+        <div className={styles.logo}>
+          <Link to={"/"}>
+            <img src="/logo.png" alt="Logo" title="REALMexico" />
+          </Link>
+        </div>
+        <Menu className={styles.bigScreen} />
+        <div className={styles.hamburger}>
+          <FontAwesomeIcon
+            onClick={showMenu}
+            className={styles.icon}
+            icon={faBars}
+          >
+            x
+          </FontAwesomeIcon>
+        </div>
+      </div>
+      {menu ? <Menu className={styles.smallScreen} /> : null}
+    </div>
+  );
+};
 
 Component.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
 };
 
-// const mapStateToProps = state => ({
-//   someProp: reduxSelector(state),
-// });
-
-// const mapDispatchToProps = dispatch => ({
-//   someAction: arg => dispatch(reduxActionCreator(arg)),
-// });
-
-// const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
-
-export {
-  Component as Header,
-  // Container as Header,
-  Component as HeaderComponent,
-};
+export { Component as Header, Component as HeaderComponent };
