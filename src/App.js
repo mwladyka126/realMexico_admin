@@ -17,10 +17,10 @@ import { Booking } from "./components/views/Booking/Booking";
 import { BookingsList } from "./components/views/BookingsList/BookingsList";
 import { NewBooking } from "./components/views/NewBooking/NewBooking";
 import { EditBooking } from "./components/views/EditBooking/EditBooking";
-import { EditTrip } from "./components/views/EditTrip/EditTrip";
-import { Trip } from "./components/views/Trip/Trip";
-import { TripsList } from "./components/views/TripsList/TripsList";
-import { NewTrip } from "./components/views/NewTrip/NewTrip";
+import { EditOffer } from "./components/views/EditOffer/EditOffer";
+import { Offer } from "./components/views/Offer/Offer";
+import { OffersList } from "./components/views/OffersList/OffersList";
+import { NewOffer } from "./components/views/NewOffer/NewOffer";
 import { NotFound } from "./components/views/NotFound/NotFound";
 
 const theme = createMuiTheme({
@@ -42,10 +42,10 @@ const App = () => (
               <Route exact path="/bookings/add" component={NewBooking} />
               <Route exact path="/bookings/:id" component={Booking} />
               <Route exact path="/bookings/:id/edit" component={EditBooking} />
-              <Route exact path="/trips" component={TripsList} />
-              <Route exact path="/trips/add" component={NewTrip} />
-              <Route exact path="/trips/:id" component={Trip} />
-              <Route exact path="/trips/:id/edit" component={EditTrip} />
+              <Route exact path="/offers" component={OffersList} />
+              <Route exact path="/offers/add" component={NewOffer} />
+              <Route exact path="/offers/:id" component={Offer} />
+              <Route exact path="/offers/:id/edit" component={EditOffer} />
               <Route path="*" component={NotFound} />
             </Switch>
           </MainLayout>

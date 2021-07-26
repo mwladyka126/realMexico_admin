@@ -9,8 +9,8 @@ const Component = ({ className, children }) => (
   <ul className={clsx(className, styles.navList)}>
     <li>
       {" "}
-      <Link to={"/trips/"} className={styles.link}>
-        TRIPS
+      <Link to={"/offers/"} className={styles.link}>
+        OFFERS
       </Link>
     </li>
     <li>
@@ -21,8 +21,8 @@ const Component = ({ className, children }) => (
     </li>
     <li>
       {" "}
-      <Link to={"/trips/add"} className={styles.link}>
-        NEW TRIP
+      <Link to={"/offers/add"} className={styles.link}>
+        NEW OFFER
       </Link>
     </li>
     <li>

@@ -6,11 +6,11 @@ import clsx from 'clsx';
 // import { connect } from 'react-redux';
 // import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
 
-import styles from './EditTrip.module.scss';
+import styles from './Offer.module.scss';
 
 const Component = ({className, children}) => (
   <div className={clsx(className, styles.root)}>
-    <h2>EditTrip</h2>
+    <h2>Offer</h2>
     {children}
   </div>
 );
@@ -31,7 +31,7 @@ Component.propTypes = {
 // const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
 
 export {
-  Component as EditTrip,
-  // Container as EditTrip,
-  Component as EditTripComponent,
+  Component as Offer,
+  // Container as Offer,
+  Component as OfferComponent,
 };

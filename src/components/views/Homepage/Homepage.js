@@ -49,9 +49,9 @@ const Component = ({ className, children }) => (
     <h2>Overview</h2>
     {children}
     <Grid container spacing={2} className={styles.tables}>
-      <Grid item xs={12} sm={6} className={styles.tables_trips}>
+      <Grid item xs={12} sm={6} className={styles.tables_offers}>
         <Paper>
-          <h2>Trips</h2>
+          <h2>Offers</h2>
           <Table>
             <TableHead>
               <TableRow>
@@ -81,8 +81,12 @@ const Component = ({ className, children }) => (
                 </TableRow>
               ))}
               <div className={styles.buttons}>
-                <Button>all trips</Button>
-                <Button>new trip</Button>
+                <Button>
+                  <Link to={"/offers"}> all offers</Link>
+                </Button>
+                <Button>
+                  <Link to={"/offers/add"}> new offer</Link>
+                </Button>
               </div>
             </TableBody>
           </Table>
@@ -121,8 +125,12 @@ const Component = ({ className, children }) => (
                 </TableRow>
               ))}
               <div className={styles.buttons}>
-                <Button>all bookings</Button>
-                <Button>new booking</Button>
+                <Button>
+                  <Link to={"/bookings/"}>All bookings</Link>
+                </Button>
+                <Button>
+                  <Link to={"/bookings/add"}> new booking offer</Link>
+                </Button>
               </div>
             </TableBody>
           </Table>
