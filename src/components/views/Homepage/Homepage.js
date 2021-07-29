@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import Table from "@material-ui/core/Table";
@@ -12,132 +12,126 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import clsx from "clsx";
 
-// import { connect } from 'react-redux';
-// import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
+import { connect } from "react-redux";
+import {
+  fetchOffersFromAPI,
+  getAllOffers,
+} from "../../../redux/offersRedux.js";
+import {
+  getAllBookings,
+  fetchBookingsFromAPI,
+} from "../../../redux/bookingsRedux.js";
 
 import styles from "./Homepage.module.scss";
 
-const demoList = [
-  {
-    table: "1",
-    time: "12:30",
-    people: "2",
-    details: "1",
-  },
-  {
-    table: "2",
-    time: "15:30",
-    people: "5",
-    details: "9",
-  },
-  {
-    table: "1",
-    time: "17:30",
-    people: "2",
-    details: "1",
-  },
-  {
-    table: "2",
-    time: "18:30",
-    people: "5",
-    details: "9",
-  },
-];
-
-const Component = ({ className, children }) => (
-  <div className={clsx(className, styles.root)}>
-    <h2>Overview</h2>
-    {children}
-    <Grid container spacing={2} className={styles.tables}>
-      <Grid item xs={12} sm={6} className={styles.tables_offers}>
-        <Paper>
-          <h2>Offers</h2>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>Title</TableCell>
-                <TableCell>Region</TableCell>
-                <TableCell>Price</TableCell>
-                <TableCell>Details</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {demoList.map((demoList) => (
-                <TableRow key={demoList.table}>
-                  <TableCell component="th" scope="row">
-                    {demoList.table}
-                  </TableCell>
-                  <TableCell>{demoList.time}</TableCell>
-                  <TableCell>{demoList.people}</TableCell>
-                  <TableCell>
-                    <Button
-                      className={styles.booked}
-                      component={Link}
-                      to={`${process.env.PUBLIC_URL}/tables/booking/${demoList.details}`}
-                    >
-                      see details
-                    </Button>
-                  </TableCell>
+const Component = ({
+  className,
+  children,
+  offers,
+  fetchOffers,
+  bookings,
+  fetchBookings,
+}) => (
+  useEffect(() => {
+    fetchOffers();
+    fetchBookings();
+  }, []),
+  console.log(offers),
+  (
+    <div className={clsx(className, styles.root)}>
+      <h2>Overview</h2>
+      {children}
+      <Grid container spacing={2} className={styles.tables}>
+        <Grid item xs={12} sm={6} className={styles.tables_offers}>
+          <Paper>
+            <h2>Offers</h2>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Title</TableCell>
+                  <TableCell>Region</TableCell>
+                  <TableCell>Price</TableCell>
+                  <TableCell>Details</TableCell>
                 </TableRow>
-              ))}
-              <div className={styles.buttons}>
-                <Button>
-                  <Link to={"/offers"}> all offers</Link>
-                </Button>
-                <Button>
-                  <Link to={"/offers/add"}> new offer</Link>
-                </Button>
-              </div>
-            </TableBody>
-          </Table>
-        </Paper>
-      </Grid>
-      <Grid item xs={12} sm={6} className={styles.tables_bookings}>
-        {" "}
-        <Paper>
-          <h2>Bookings</h2>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>Date</TableCell>
-                <TableCell>Name</TableCell>
-                <TableCell>Email</TableCell>
-                <TableCell>Details</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {demoList.map((demoList) => (
-                <TableRow key={demoList.table}>
-                  <TableCell component="th" scope="row">
-                    {demoList.table}
-                  </TableCell>
-                  <TableCell>{demoList.time}</TableCell>
-                  <TableCell>{demoList.people}</TableCell>
-                  <TableCell>
-                    <Button
-                      className={styles.booked}
-                      component={Link}
-                      to={`${process.env.PUBLIC_URL}/tables/booking/${demoList.details}`}
-                    >
-                      see details
-                    </Button>
-                  </TableCell>
+              </TableHead>
+              <TableBody>
+                {offers.map((offer) => (
+                  <TableRow key={offer._id}>
+                    <TableCell component="th" scope="row">
+                      {offer.title}
+                    </TableCell>
+                    <TableCell> {offer.title}</TableCell>
+                    <TableCell>{offer.title}</TableCell>
+                    <TableCell>
+                      <Button
+                        className={styles.booked}
+                        component={Link}
+                        to={`${process.env.PUBLIC_URL}/tables/booking/${offer.price}`}
+                      >
+                        see details
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+                <div className={styles.buttons}>
+                  <Button>
+                    <Link to={"/offers"}> all offers</Link>
+                  </Button>
+                  <Button>
+                    <Link to={"/offers/add"}> new offer</Link>
+                  </Button>
+                </div>
+              </TableBody>
+            </Table>
+          </Paper>
+        </Grid>
+        <Grid item xs={12} sm={6} className={styles.tables_bookings}>
+          {" "}
+          <Paper>
+            <h2>Bookings</h2>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Date</TableCell>
+                  <TableCell>Name</TableCell>
+                  <TableCell>Email</TableCell>
+                  <TableCell>Details</TableCell>
                 </TableRow>
-              ))}
-              <div className={styles.buttons}>
-                <Button>
-                  <Link to={"/bookings/"}>All bookings</Link>
-                </Button>
-                <Button>
-                  <Link to={"/bookings/add"}> new booking offer</Link>
-                </Button>
-              </div>
-            </TableBody>
-          </Table>
-        </Paper>
+              </TableHead>
+              <TableBody>
+                {bookings.map((booking) => (
+                  <TableRow key={booking._id}>
+                    <TableCell component="th" scope="row">
+                      {booking.created}
+                    </TableCell>
+                    <TableCell>{booking.lastName}</TableCell>
+                    <TableCell>{booking.email}</TableCell>
+                    <TableCell>
+                      <Button
+                        className={styles.booked}
+                        component={Link}
+                        to={`${process.env.PUBLIC_URL}/booking/${booking._id}`}
+                      >
+                        see details
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+                <div className={styles.buttons}>
+                  <Button>
+                    <Link to={"/bookings/"}>All bookings</Link>
+                  </Button>
+                  <Button>
+                    <Link to={"/bookings/add"}> new booking offer</Link>
+                  </Button>
+                </div>
+              </TableBody>
+            </Table>
+          </Paper>
+        </Grid>
       </Grid>
-    </Grid>
-  </div>
+    </div>
+  )
 );
 
 Component.propTypes = {
@@ -145,18 +139,15 @@ Component.propTypes = {
   className: PropTypes.string,
 };
 
-// const mapStateToProps = state => ({
-//   someProp: reduxSelector(state),
-// });
+const mapStateToProps = (state) => ({
+  offers: getAllOffers(state),
+  bookings: getAllBookings(state),
+});
+const mapDispatchToProps = (dispatch) => ({
+  fetchOffers: () => dispatch(fetchOffersFromAPI()),
+  fetchBookings: () => dispatch(fetchBookingsFromAPI()),
+});
 
-// const mapDispatchToProps = dispatch => ({
-//   someAction: arg => dispatch(reduxActionCreator(arg)),
-// });
+const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
 
-// const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
-
-export {
-  Component as Homepage,
-  // Container as Homepage,
-  Component as HomepageComponent,
-};
+export { Container as Homepage, Component as HomepageComponent };
