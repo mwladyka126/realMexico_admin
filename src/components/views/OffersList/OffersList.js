@@ -26,13 +26,12 @@ const Component = ({ className, children, offers, fetchOffers }) => (
   }, []),
   (
     <div className={clsx(className, styles.root)}>
-      <h2>Overview</h2>
+      <h2>Offers overview</h2>
       {children}
       <Grid container spacing={2} className={styles.tables}>
-        <Grid item xs={12} sm={6} className={styles.tables_bookings}>
+        <Grid item xs={12} className={styles.tables_bookings}>
           {" "}
           <Paper>
-            <h2>Offers</h2>
             <Table>
               <TableHead>
                 <TableRow>
@@ -49,12 +48,12 @@ const Component = ({ className, children, offers, fetchOffers }) => (
                       {offer.title}
                     </TableCell>
                     <TableCell> {offer.title}</TableCell>
-                    <TableCell>{offer.title}</TableCell>
+                    <TableCell>{offer.region}</TableCell>
                     <TableCell>
                       <Button
                         className={styles.booked}
                         component={Link}
-                        to={`${process.env.PUBLIC_URL}/tables/booking/${offer.price}`}
+                        to={`${process.env.PUBLIC_URL}/offers/${offer._id}`}
                       >
                         see details
                       </Button>

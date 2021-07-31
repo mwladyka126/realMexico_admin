@@ -16,7 +16,7 @@ router.get("/bookings", async (req, res) => {
   try {
     const result = await Booking.find()
       .select(
-        " lastName email created offers.title offers.people offers.days offers.totalPrice offers.message"
+        " lastName firstName email phone created offers.title offers.people offers.days offers.totalPrice offers.message"
       )
       .sort({ created: -1 });
     if (!result) res.status(404).json({ booking: "Not found" });

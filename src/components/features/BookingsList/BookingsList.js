@@ -31,6 +31,7 @@ const Component = ({
   fetchOffers,
   bookings,
   fetchBookings,
+  fullList,
 }) => (
   useEffect(() => {
     fetchOffers();
@@ -39,19 +40,20 @@ const Component = ({
   console.log(offers),
   (
     <div className={clsx(className, styles.root)}>
-      <h2>Overview</h2>
+      <h2>Bookings overview</h2>
       {children}
       <Grid container spacing={2} className={styles.tables}>
-        <Grid item xs={12} sm={6} className={styles.tables_bookings}>
+        <Grid item xs={12} className={styles.tables_bookings}>
           {" "}
-          <Paper>
-            <h2>Bookings</h2>
-            <Table>
+          <Paper className={styles.scrollWrapper}>
+            <Table className={styles.table}>
               <TableHead>
                 <TableRow>
                   <TableCell>Date</TableCell>
                   <TableCell>Name</TableCell>
+                  {fullList ? <TableCell>First Name</TableCell> : null}
                   <TableCell>Email</TableCell>
+                  {fullList ? <TableCell>Phone</TableCell> : null}
                   <TableCell>Details</TableCell>
                 </TableRow>
               </TableHead>
@@ -62,12 +64,16 @@ const Component = ({
                       {booking.created}
                     </TableCell>
                     <TableCell>{booking.lastName}</TableCell>
+                    {fullList ? (
+                      <TableCell>{booking.firstName}</TableCell>
+                    ) : null}
                     <TableCell>{booking.email}</TableCell>
+                    {fullList ? <TableCell>{booking.phone}</TableCell> : null}
                     <TableCell>
                       <Button
                         className={styles.booked}
                         component={Link}
-                        to={`${process.env.PUBLIC_URL}/booking/${booking._id}`}
+                        to={`${process.env.PUBLIC_URL}/bookings/${booking._id}`}
                       >
                         see details
                       </Button>

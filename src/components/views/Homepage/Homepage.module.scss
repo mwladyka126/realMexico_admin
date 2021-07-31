@@ -1,4 +1,9 @@
-@import '../../../styles/settings.scss';
+@import "../../../styles/settings.scss";
+@import "../../../styles/mixins.scss";
 
-// .root {
-// }
+.root {
+  @include container;
+  .tables {
+    
+  }
+}

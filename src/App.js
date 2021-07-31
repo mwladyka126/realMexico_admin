@@ -14,7 +14,7 @@ import { store } from "./redux/store";
 import { MainLayout } from "./components/layout/MainLayout/MainLayout";
 import { Homepage } from "./components/views/Homepage/Homepage";
 import { Booking } from "./components/views/Booking/Booking";
-import { BookingsList } from "./components/views/BookingsList/BookingsList";
+
 import { NewBooking } from "./components/views/NewBooking/NewBooking";
 import { EditBooking } from "./components/views/EditBooking/EditBooking";
 import { EditOffer } from "./components/views/EditOffer/EditOffer";
@@ -38,7 +38,7 @@ const App = () => (
           <MainLayout>
             <Switch>
               <Route exact path="/" component={Homepage} />
-              <Route exact path="/bookings" component={BookingsList} />
+              <Route exact path="/bookings" component={Booking} />
               <Route exact path="/bookings/add" component={NewBooking} />
               <Route exact path="/bookings/:id" component={Booking} />
               <Route exact path="/bookings/:id/edit" component={EditBooking} />
