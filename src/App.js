@@ -13,13 +13,12 @@ import { store } from "./redux/store";
 
 import { MainLayout } from "./components/layout/MainLayout/MainLayout";
 import { Homepage } from "./components/views/Homepage/Homepage";
-import { Booking } from "./components/views/Booking/Booking";
+import { BookingsOverview } from "./components/views/BookingsOverview/BookingsOverview";
 
 import { NewBooking } from "./components/views/NewBooking/NewBooking";
 import { EditBooking } from "./components/views/EditBooking/EditBooking";
 import { EditOffer } from "./components/views/EditOffer/EditOffer";
-import { Offer } from "./components/views/Offer/Offer";
-import { OffersList } from "./components/views/OffersList/OffersList";
+import { OffersOverview } from "./components/views/OffersOverview/OffersOverview";
 import { NewOffer } from "./components/views/NewOffer/NewOffer";
 import { NotFound } from "./components/views/NotFound/NotFound";
 
@@ -38,13 +37,13 @@ const App = () => (
           <MainLayout>
             <Switch>
               <Route exact path="/" component={Homepage} />
-              <Route exact path="/bookings" component={Booking} />
+              <Route exact path="/bookings" component={BookingsOverview} />
               <Route exact path="/bookings/add" component={NewBooking} />
-              <Route exact path="/bookings/:id" component={Booking} />
+              <Route exact path="/bookings/:id" component={""} />
               <Route exact path="/bookings/:id/edit" component={EditBooking} />
-              <Route exact path="/offers" component={OffersList} />
+              <Route exact path="/offers" component={OffersOverview} />
               <Route exact path="/offers/add" component={NewOffer} />
-              <Route exact path="/offers/:id" component={Offer} />
+              <Route exact path="/offers/:id" component={""} />
               <Route exact path="/offers/:id/edit" component={EditOffer} />
               <Route path="*" component={NotFound} />
             </Switch>

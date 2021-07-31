@@ -1,17 +1,17 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
+import { OffersList } from "../../features/OffersList/OffersList";
 
-import clsx from 'clsx';
+import clsx from "clsx";
 
 // import { connect } from 'react-redux';
 // import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
 
-import styles from './Offer.module.scss';
+import styles from "./OffersOverview.module.scss";
 
-const Component = ({className, children}) => (
+const Component = ({ className, children }) => (
   <div className={clsx(className, styles.root)}>
-    <h2>Offer</h2>
-    {children}
+    <OffersList />
   </div>
 );
 
@@ -31,7 +31,7 @@ Component.propTypes = {
 // const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
 
 export {
-  Component as Offer,
+  Component as OffersOverview,
   // Container as Offer,
-  Component as OfferComponent,
+  Component as OffersOverviewComponent,
 };

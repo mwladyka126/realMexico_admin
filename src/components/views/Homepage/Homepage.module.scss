@@ -3,7 +3,15 @@
 
 .root {
   @include container;
-  .tables {
-    
+  .title {
+    text-align: center;
+  }
+  .button {
+    background-color: $color-background-color;
+  }
+  .link {
+    @include link;
+    color: $color-text-light;
+    font-family: bold;
   }
 }

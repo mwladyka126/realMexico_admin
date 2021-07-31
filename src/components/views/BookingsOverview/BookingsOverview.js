@@ -6,7 +6,7 @@ import { BookingsList } from "../../features/BookingsList/BookingsList";
 // import { connect } from 'react-redux';
 // import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
 
-import styles from "./Booking.module.scss";
+import styles from "./BookingsOverview.module.scss";
 
 const Component = ({ className, children }) => (
   <div className={clsx(className, styles.root)}>
@@ -30,7 +30,7 @@ Component.propTypes = {
 // const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
 
 export {
-  Component as Booking,
+  Component as BookingsOverview,
   // Container as Booking,
-  Component as BookingComponent,
+  Component as BookingsOverviewComponent,
 };
