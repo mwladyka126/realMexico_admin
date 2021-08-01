@@ -1,4 +1,19 @@
-@import '../../../styles/settings.scss';
+@import "../../../styles/settings.scss";
+@import "../../../styles/mixins.scss";
 
-// .root {
-// }
+.root {
+  @include container;
+  .addBooking {
+    @include wrapper;
+    justify-content: center;
+  }
+  .button {
+    background-color: $color-background-color;
+    margin: $base-size;
+  }
+  .link {
+    @include link;
+    color: $color-text-light;
+    font-family: bold;
+  }
+}

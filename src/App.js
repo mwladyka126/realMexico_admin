@@ -17,6 +17,8 @@ import { BookingsOverview } from "./components/views/BookingsOverview/BookingsOv
 
 import { NewBooking } from "./components/views/NewBooking/NewBooking";
 import { EditBooking } from "./components/views/EditBooking/EditBooking";
+import { SingleBooking } from "./components/views/SingleBooking/SingleBooking";
+import { SingleOffer } from "./components/views/SingleOffer/SingleOffer";
 import { EditOffer } from "./components/views/EditOffer/EditOffer";
 import { OffersOverview } from "./components/views/OffersOverview/OffersOverview";
 import { NewOffer } from "./components/views/NewOffer/NewOffer";
@@ -39,11 +41,15 @@ const App = () => (
               <Route exact path="/" component={Homepage} />
               <Route exact path="/bookings" component={BookingsOverview} />
               <Route exact path="/bookings/add" component={NewBooking} />
-              <Route exact path="/bookings/:id" component={""} />
+              <Route
+                exact
+                path="/bookings/:bookingId"
+                component={SingleBooking}
+              />
               <Route exact path="/bookings/:id/edit" component={EditBooking} />
               <Route exact path="/offers" component={OffersOverview} />
               <Route exact path="/offers/add" component={NewOffer} />
-              <Route exact path="/offers/:id" component={""} />
+              <Route exact path="/offers/:offerId" component={SingleOffer} />
               <Route exact path="/offers/:id/edit" component={EditOffer} />
               <Route path="*" component={NotFound} />
             </Switch>

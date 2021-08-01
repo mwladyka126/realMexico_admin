@@ -2,7 +2,6 @@
 @import "../../../styles/mixins.scss";
 
 .root {
-  @include container;
   .title {
     text-align: center;
   }

@@ -2,7 +2,7 @@ import Axios from "axios";
 import { API_URL } from "../config";
 /* selectors */
 export const getAllBookings = ({ bookings }) => bookings.data;
-export const getOne = ({ bookings }) => bookings.onebooking;
+export const getOne = ({ bookings }) => bookings.oneBooking;
 export const getOneBooking = ({ bookings }, bookingId) =>
   bookings.data.find((booking) => booking._id === bookingId);
 export const getBookingsByRegion = ({ bookings }, regionId) =>
@@ -99,7 +99,7 @@ export const reducer = (statePart = [], action = {}) => {
           active: false,
           error: false,
         },
-        onebooking: action.payload,
+        oneBooking: action.payload,
       };
     }
 
