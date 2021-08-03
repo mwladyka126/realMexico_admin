@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import Table from "@material-ui/core/Table";
@@ -7,6 +7,7 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
+import TablePagination from "@material-ui/core/TablePagination";
 import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
 import clsx from "clsx";
@@ -18,11 +19,21 @@ import {
   fetchBookingsFromAPI,
 } from "../../../redux/bookingsRedux.js";
 
-const Component = ({ className, bookings, fetchBookings, fullList }) => (
+const Component = ({ className, bookings, fetchBookings, fullList }) => {
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [page, setPage] = useState(0);
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
   useEffect(() => {
     fetchBookings();
-  }, []),
-  (
+  }, []);
+  return (
     <div className={clsx(className, styles.root)}>
       <h2 className={styles.title}>Bookings </h2>
 
@@ -68,10 +79,19 @@ const Component = ({ className, bookings, fetchBookings, fullList }) => (
             </TableBody>
           </Table>
         </TableContainer>
+        <TablePagination
+          rowsPerPageOptions={[5, 10, 25]}
+          component="div"
+          count={bookings.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
       </Paper>
     </div>
-  )
-);
+  );
+};
 
 Component.propTypes = {
   children: PropTypes.node,
