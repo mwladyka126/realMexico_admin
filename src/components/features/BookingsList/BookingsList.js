@@ -7,7 +7,6 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import TablePagination from "@material-ui/core/TablePagination";
 import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
 import clsx from "clsx";
@@ -20,22 +19,48 @@ import {
 } from "../../../redux/bookingsRedux.js";
 
 const Component = ({ className, bookings, fetchBookings, fullList }) => {
-  const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [page, setPage] = useState(0);
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
+  const [bookingsOnPage, setBookingOnPage] = useState(bookings);
+  const [term, setTerm] = useState("");
+
+  const showOnPage = (event) => {
+    setBookingOnPage(bookings.slice(0, event.target.value));
+  };
+  const searchBookings = (e) => {
+    setTerm(e.currentTarget.value);
+    const filteredBookings = bookings.filter(
+      (el) =>
+        el.lastName.toUpperCase().indexOf(term.toUpperCase()) >= 0 ||
+        el.firstName.toUpperCase().indexOf(term.toUpperCase()) >= 0
+    );
+    setBookingOnPage(filteredBookings);
   };
 
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
   useEffect(() => {
     fetchBookings();
   }, []);
   return (
     <div className={clsx(className, styles.root)}>
       <h2 className={styles.title}>Bookings </h2>
+      <div className={styles.sortInputs}>
+        <div className={styles.sortInputs_search}>
+          <input
+            onChange={searchBookings}
+            className="form-control"
+            type="text"
+            placeholder="Search..."
+          />
+        </div>
+        <div className={styles.sortInputs_show}>
+          <label htmlFor="show">Show</label>
+          <select onClick={showOnPage} id="show">
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="40">40</option>
+            <option value="50">50</option>
+            <option value={bookings.length}>ALL</option>
+          </select>
+        </div>
+      </div>
 
       <Paper>
         <TableContainer className={styles.scrollWrapper}>
@@ -51,7 +76,7 @@ const Component = ({ className, bookings, fetchBookings, fullList }) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {bookings.map((booking) => (
+              {bookingsOnPage.map((booking) => (
                 <TableRow key={booking._id}>
                   <TableCell component="th" scope="row">
                     {booking.created}
@@ -79,15 +104,6 @@ const Component = ({ className, bookings, fetchBookings, fullList }) => {
             </TableBody>
           </Table>
         </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
-          component="div"
-          count={bookings.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
       </Paper>
     </div>
   );

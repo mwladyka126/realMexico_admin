@@ -9,7 +9,6 @@
     text-align: center;
     .link {
       @include link;
-      color: $color-text-light;
       font-size: large;
       font-weight: 600;
       span {

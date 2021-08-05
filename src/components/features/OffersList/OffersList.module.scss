@@ -3,7 +3,24 @@
 
 .root {
   .title {
-    text-align: center;
+    @include mainTitle;
+  }
+  .sortInputs {
+    @include wrapper;
+    justify-content: flex-start;
+    &_search {
+      margin: $base-size;
+      input {
+        height: $base-size * 2.5;
+      }
+    }
+    &_show {
+      margin: $base-size;
+      select {
+        height: $base-size * 2.5;
+        margin-left: $base-size;
+      }
+    }
   }
   .scrollWrapper {
     overflow-x: auto !important;
@@ -13,7 +30,5 @@
   }
   .link {
     @include link;
-    color: $color-text-light;
-    font-family: bold;
   }
 }

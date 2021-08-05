@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import Table from "@material-ui/core/Table";
@@ -20,13 +20,48 @@ import {
 
 import styles from "./OffersList.module.scss";
 
-const Component = ({ className, children, offers, fetchOffers }) => (
+const Component = ({ className, children, offers, fetchOffers }) => {
+  const [offersOnPage, setOffersOnPage] = useState(offers);
+  const [term, setTerm] = useState("");
+
+  const showOnPage = (event) => {
+    setOffersOnPage(offers.slice(0, event.target.value));
+  };
+  const searchOffers = (e) => {
+    setTerm(e.currentTarget.value);
+    const filteredOffers = offers.filter(
+      (el) =>
+        el.title.toUpperCase().indexOf(term.toUpperCase()) >= 0 ||
+        el.region.toUpperCase().indexOf(term.toUpperCase()) >= 0
+    );
+    setOffersOnPage(filteredOffers);
+  };
   useEffect(() => {
     fetchOffers();
-  }, []),
-  (
+  }, []);
+  return (
     <div className={clsx(className, styles.root)}>
       <h2 className={styles.title}>Offers</h2>
+      <div className={styles.sortInputs}>
+        <div className={styles.sortInputs_search}>
+          <input
+            onChange={searchOffers}
+            className="form-control"
+            type="text"
+            placeholder="Search..."
+          />
+        </div>
+        <div className={styles.sortInputs_show}>
+          <label htmlFor="show">Show</label>
+          <select onClick={showOnPage} id="show">
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="40">40</option>
+            <option value="50">50</option>
+            <option value={offers.length}>ALL</option>
+          </select>
+        </div>
+      </div>
       <Paper>
         <TableContainer className={styles.scrollWrapper}>
           <Table className={styles.table}>
@@ -64,8 +99,8 @@ const Component = ({ className, children, offers, fetchOffers }) => (
         </TableContainer>
       </Paper>
     </div>
-  )
-);
+  );
+};
 
 Component.propTypes = {
   children: PropTypes.node,
