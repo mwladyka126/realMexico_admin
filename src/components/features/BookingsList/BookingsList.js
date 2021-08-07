@@ -23,7 +23,7 @@ const Component = ({ className, bookings, fetchBookings, fullList }) => {
   const [term, setTerm] = useState("");
 
   const showOnPage = (event) => {
-    setBookingOnPage(bookings.slice(0, event.target.value));
+    setBookingOnPage(bookings.slice(0, event.currentTarget.value));
   };
   const searchBookings = (e) => {
     setTerm(e.currentTarget.value);
@@ -112,6 +112,9 @@ const Component = ({ className, bookings, fetchBookings, fullList }) => {
 Component.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
+  bookings: PropTypes.array,
+  fetchBookings: PropTypes.func,
+  fullList: PropTypes.bool,
 };
 
 const mapStateToProps = (state) => ({

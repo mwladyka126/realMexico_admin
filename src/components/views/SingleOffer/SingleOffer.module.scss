@@ -1,4 +1,42 @@
-@import '../../../styles/settings.scss';
+@import "../../../styles/settings.scss";
+@import "../../../styles/mixins.scss";
 
-// .root {
-// }
+.root {
+  @include container;
+  color: $color-text-dark;
+  .text {
+    &_element {
+      @include wrapper;
+      flex-direction: column;
+      .title {
+        @include mainTitle;
+      }
+      p {
+        text-align: justify;
+      }
+    }
+  }
+  .buttons {
+    @include wrapper;
+    justify-content: center;
+    .button {
+      background-color: $color-background-color;
+      margin: $base-size $base-size/2;
+    }
+    .link {
+      @include link;
+    }
+  }
+  .photos {
+    padding: $base-size $base-size $base-size/2 $base-size;
+
+    .photoWrapper {
+      height: 200px;
+      position: relative;
+      margin-bottom: $base-size;
+    }
+    img {
+      @include image;
+    }
+  }
+}
