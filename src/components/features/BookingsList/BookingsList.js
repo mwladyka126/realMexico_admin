@@ -47,7 +47,7 @@ const Component = ({ className, bookings, fetchBookings, fullList }) => {
             onChange={searchBookings}
             className="form-control"
             type="text"
-            placeholder="Search..."
+            placeholder="Search by name..."
           />
         </div>
         <div className={styles.sortInputs_show}>

@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 import clsx from "clsx";
 import styles from "./Menu.module.scss";
@@ -9,27 +9,47 @@ const Component = ({ className, children }) => (
   <ul className={clsx(className, styles.navList)}>
     <li>
       {" "}
-      <Link to={"/offers/"} className={styles.link}>
+      <NavLink
+        exact
+        to={"/offers/"}
+        className={styles.link}
+        activeClassName={styles.active}
+      >
         OFFERS
-      </Link>
+      </NavLink>
     </li>
     <li>
       {" "}
-      <Link to={"/bookings/"} className={styles.link}>
+      <NavLink
+        exact
+        to={"/bookings/"}
+        className={styles.link}
+        activeClassName={styles.active}
+      >
         BOOKINGS
-      </Link>
+      </NavLink>
     </li>
     <li>
       {" "}
-      <Link to={"/offers/add"} className={styles.link}>
+      <NavLink
+        exact
+        to={"/offers/add"}
+        className={styles.link}
+        activeClassName={styles.active}
+      >
         NEW OFFER
-      </Link>
+      </NavLink>
     </li>
     <li>
       {" "}
-      <Link to={"/bookings/add"} className={styles.link}>
+      <NavLink
+        exact
+        to={"/bookings/add"}
+        className={styles.link}
+        activeClassName={styles.active}
+      >
         NEW BOOKING
-      </Link>
+      </NavLink>
     </li>
   </ul>
 );

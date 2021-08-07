@@ -48,7 +48,7 @@ const Component = ({ className, children, offers, fetchOffers }) => {
             onChange={searchOffers}
             className="form-control"
             type="text"
-            placeholder="Search..."
+            placeholder="Search by region or title..."
           />
         </div>
         <div className={styles.sortInputs_show}>
@@ -74,7 +74,7 @@ const Component = ({ className, children, offers, fetchOffers }) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {offers.map((offer) => (
+              {offersOnPage.map((offer) => (
                 <TableRow key={offer._id}>
                   <TableCell component="th" scope="row">
                     {offer.title}

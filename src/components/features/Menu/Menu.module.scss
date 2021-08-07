@@ -11,12 +11,12 @@
       @include link;
       font-size: large;
       font-weight: 600;
-      span {
-        color: $color-main;
-      }
       &:hover {
         border-bottom: solid $color-main 3px;
       }
+    }
+    .active {
+      color: $color-main;
     }
     .icon {
       @extend .link;

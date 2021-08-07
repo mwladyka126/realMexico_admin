@@ -4,14 +4,17 @@
 .root {
   @include container;
   .title {
-    text-align: center;
+    @include mainTitle;
   }
-  .button {
-    background-color: $color-background-color;
-  }
-  .link {
-    @include link;
-    color: $color-text-light;
-    font-family: bold;
+  .buttons {
+    @include wrapper;
+    justify-content: center;
+    .button {
+      background-color: $color-background-color;
+      margin: $base-size $base-size/2;
+    }
+    .link {
+      @include link;
+    }
   }
 }
