@@ -11,7 +11,7 @@ import styles from "./Homepage.module.scss";
 
 const Component = ({ className, children }) => (
   <div className={clsx(className, styles.root)}>
-    <h2 className={styles.title}>Dashboard</h2>
+    <h1 className={styles.title}>Dashboard</h1>
     {children}
     <Grid container spacing={2} className={styles.tables}>
       <Grid item xs={12} sm={6} className={styles.tables_offers}>

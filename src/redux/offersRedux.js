@@ -18,12 +18,16 @@ const createActionName = (name) => `app/${reducerName}/${name}`;
 const FETCH_START = createActionName("FETCH_START");
 const FETCH_SUCCESS = createActionName("FETCH_SUCCESS");
 const FETCH_ERROR = createActionName("FETCH_ERROR");
+const ADD_OFFER = createActionName("ADD_OFFER");
+const EDIT_OFFER = createActionName("EDIT_OFFER");
 const FETCH_ONE_OFFER = createActionName("FETCH_ONE_OFFER");
 
 /* action creators */
 export const fetchStarted = (payload) => ({ payload, type: FETCH_START });
 export const fetchSuccess = (payload) => ({ payload, type: FETCH_SUCCESS });
 export const fetchError = (payload) => ({ payload, type: FETCH_ERROR });
+export const addOffer = (payload) => ({ payload, type: ADD_OFFER });
+export const editOffer = (payload) => ({ payload, type: EDIT_OFFER });
 export const fetchOneOffer = (payload) => ({ payload, type: FETCH_ONE_OFFER });
 
 /* thunk creators */
@@ -51,6 +55,42 @@ export const fetchOneOfferFromAPI = (id) => {
     Axios.get(`${API_URL}/offers/${id}`)
       .then((res) => {
         dispatch(fetchOneOffer(res.data));
+      })
+      .catch((err) => {
+        dispatch(fetchError(err.message || true));
+      });
+  };
+};
+
+export const addOfferRequest = (data) => {
+  return (dispatch) => {
+    dispatch(fetchStarted());
+    console.log("data", data);
+    Axios.post(`${API_URL}/offers`, data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
+      .then((res) => {
+        dispatch(addOffer(data));
+      })
+      .catch((err) => {
+        dispatch(fetchError(err.message || true));
+      });
+  };
+};
+
+export const editOFFERRequest = (data, id) => {
+  console.log(data);
+  return async (dispatch) => {
+    dispatch(fetchStarted());
+    Axios.put(`${API_URL}/offers/${id}/edit`, data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
+      .then((res) => {
+        dispatch(editOffer(data));
       })
       .catch((err) => {
         dispatch(fetchError(err.message || true));
@@ -90,6 +130,23 @@ export const reducer = (statePart = [], action = {}) => {
           error: action.payload,
           confirmation: false,
         },
+      };
+    }
+    case ADD_OFFER: {
+      console.log("action.payload", action.payload);
+      return {
+        ...statePart,
+        data: [...statePart.data, action.payload],
+      };
+    }
+    case EDIT_OFFER: {
+      return {
+        ...statePart,
+        data: [
+          ...statePart.data.map((offer) =>
+            offer._id === action.payload._id ? action.payload : offer
+          ),
+        ],
       };
     }
     case FETCH_ONE_OFFER: {

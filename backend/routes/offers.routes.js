@@ -27,6 +27,7 @@ router.post("/offers", async (req, res) => {
     await newoffer.save();
     res.json({ newoffer });
   } catch (err) {
+    console.log(err);
     res.status(500).json({ message: err });
   }
 });
