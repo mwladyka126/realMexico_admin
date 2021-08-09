@@ -96,7 +96,7 @@ class Component extends React.Component {
       }
 
       addNewOffer(formData);
-      console.log(formData);
+      console.log(offer);
 
       alert("New offer has been add");
     } else {
@@ -111,7 +111,11 @@ class Component extends React.Component {
         <Grid container align="center" justify="center">
           <Grid item align="center" xs={12} sm={9}>
             <Paper className={styles.form}>
-              <form onSubmit={this.submitForm}>
+              <form
+                onSubmit={this.submitForm}
+                encType="multipart/form-data"
+                method="post"
+              >
                 <Typography variant="h6">Add a new offer</Typography>
 
                 <Grid item align="center" xs={12} sm={9}>

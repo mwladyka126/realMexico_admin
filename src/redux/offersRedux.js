@@ -66,7 +66,7 @@ export const addOfferRequest = (data) => {
   return (dispatch) => {
     dispatch(fetchStarted());
     console.log("data", data);
-    Axios.post(`${API_URL}/offers`, data, {
+    Axios.post(`${API_URL}/offers/add`, data, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -80,7 +80,7 @@ export const addOfferRequest = (data) => {
   };
 };
 
-export const editOFFERRequest = (data, id) => {
+export const editOfferRequest = (data, id) => {
   console.log(data);
   return async (dispatch) => {
     dispatch(fetchStarted());

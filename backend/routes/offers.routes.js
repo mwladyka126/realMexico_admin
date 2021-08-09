@@ -1,22 +1,23 @@
 const express = require("express");
 const router = express.Router();
 
-const offer = require("../models/offer.model");
+const Offer = require("../models/offer.model");
 
 router.get("/offers", async (req, res) => {
   try {
-    const result = await offer.find();
-    if (!result) res.status(404).json({ offer: "Not found" });
+    const result = await Offer.find();
+    if (!result) res.status(404).json({ Offer: "Not found" });
     else res.json(result);
   } catch (err) {
     res.status(500).json(err);
   }
 });
 
-router.post("/offers", async (req, res) => {
+router.post("/offers/add", async (req, res) => {
   try {
     const { region, regionId, title, description, price, image } = req.body;
-    const newoffer = new offer({
+    console.log(req.body);
+    const newOffer = new Offer({
       region: region,
       regionId: regionId,
       title: title,
@@ -24,8 +25,8 @@ router.post("/offers", async (req, res) => {
       price: price,
       image: image,
     });
-    await newoffer.save();
-    res.json({ newoffer });
+    await newOffer.save();
+    res.json({ newOffer });
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: err });
@@ -34,7 +35,7 @@ router.post("/offers", async (req, res) => {
 
 router.get("/offers/:id", async (req, res) => {
   try {
-    const result = await offer.findById(req.params.id);
+    const result = await Offer.findById(req.params.id);
     if (!result) res.status(404).json({ offer: "Not found" });
     else res.json(result);
   } catch (err) {
