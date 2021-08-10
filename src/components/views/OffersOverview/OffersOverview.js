@@ -15,8 +15,8 @@ import styles from "./OffersOverview.module.scss";
 const Component = ({ className, children }) => (
   <div className={clsx(className, styles.root)}>
     <Paper>
-      <div className={styles.addBooking}>
-        <h4>New offer</h4>
+      <div className={styles.addNew}>
+        <h3 className={styles.buttonDesc}>New offer</h3>
         <Button size="small" variant="contained" className={styles.button}>
           <Link to={"/offers/add"} className={styles.link}>
             add

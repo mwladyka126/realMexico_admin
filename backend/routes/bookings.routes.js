@@ -15,9 +15,7 @@ function escape(html) {
 router.get("/bookings", async (req, res) => {
   try {
     const result = await Booking.find()
-      .select(
-        " lastName firstName email phone created offers.title offers.people offers.days offers.totalPrice offers.message"
-      )
+      .select(" lastName firstName email phone created trips")
       .sort({ created: -1 });
     if (!result) res.status(404).json({ booking: "Not found" });
     else res.json(result);
@@ -28,7 +26,7 @@ router.get("/bookings", async (req, res) => {
 
 router.post("/bookings", async (req, res) => {
   try {
-    const { offers, created, firstName, lastName, email, phone } = req.body;
+    const { trips, created, firstName, lastName, email, phone } = req.body;
     const emailPattern = new RegExp(
       "^[a-zA-Z0-9][a-zA-Z0-9_.-]+@[a-zA-Z0-9][a-zA-Z0-9_.-]+.{1,3}[a-zA-Z]{2,4}"
     );
@@ -43,7 +41,7 @@ router.post("/bookings", async (req, res) => {
 
     if (validatedEmail && validatedPhone && firstName && lastName) {
       const newBooking = new Booking({
-        offers,
+        trips,
         created,
         firstName: escape(firstName),
         lastName: escape(lastName),

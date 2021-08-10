@@ -3,9 +3,13 @@
 
 .root {
   @include container;
-  .addBooking {
+  .addNew {
     @include wrapper;
     justify-content: center;
+    .buttonDesc {
+      @include mainTitle;
+      color: $color-text-dark;
+    }
   }
   .button {
     background-color: $color-background-color;

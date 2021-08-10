@@ -1,5 +1,37 @@
 const express = require("express");
 const router = express.Router();
+const multer = require("multer");
+const pathUploads = "./public/images/offers";
+
+/*upload foto*/
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, pathUploads);
+  },
+  filename: (req, file, cb) => {
+    cb(null + file.originalname);
+  },
+});
+
+const fileFilter = (req, file, cb) => {
+  if (
+    file.mimetype === "image/jpeg" ||
+    file.mimetype === "image/png" ||
+    file.mimetype === "image/gif" ||
+    file.mimetype === "image/jpg" ||
+    file.mimetype === "image/jfif"
+  ) {
+    cb(null, true);
+  } else {
+    cb("Type file is not access", false);
+  }
+};
+
+const upload = multer({
+  storage,
+  fileFilter,
+  limits: 1024 * 1024 * 5,
+});
 
 const Offer = require("../models/offer.model");
 
@@ -13,18 +45,25 @@ router.get("/offers", async (req, res) => {
   }
 });
 
-router.post("/offers/add", async (req, res) => {
+router.post("/offers/add", upload.array("image", 3), async (req, res) => {
   try {
-    const { region, regionId, title, description, price, image } = req.body;
-    console.log(req.body);
+    const { region, regionId, title, description, price } = req.body;
+    console.log("req.body", req.body);
+    console.log("req.files", req.files);
+
+    const photosSrc = [];
+
+    req.files.map((el) => photosSrc.push("images/offers/" + el.filename));
+    console.log("photosSrc", photosSrc);
     const newOffer = new Offer({
       region: region,
       regionId: regionId,
       title: title,
       description: description,
       price: price,
-      image: image,
+      image: photosSrc,
     });
+
     await newOffer.save();
     res.json({ newOffer });
   } catch (err) {

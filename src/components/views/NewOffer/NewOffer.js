@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import clsx from "clsx";
+import { Link } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import TextField from "@material-ui/core/TextField";
@@ -22,7 +23,7 @@ class Component extends React.Component {
     offer: {
       title: "",
       description: "",
-      image: null,
+      image: [],
       price: "",
       region: "",
       regionId: "",
@@ -30,7 +31,7 @@ class Component extends React.Component {
   };
   setImage = (files) => {
     const { offer } = this.state;
-    console.log(files[0]);
+    console.log(files);
     if (files) this.setState({ offer: { ...offer, image: files } });
     else this.setState({ offer: { ...offer, image: null } });
   };
@@ -111,12 +112,10 @@ class Component extends React.Component {
         <Grid container align="center" justify="center">
           <Grid item align="center" xs={12} sm={9}>
             <Paper className={styles.form}>
-              <form
-                onSubmit={this.submitForm}
-                encType="multipart/form-data"
-                method="post"
-              >
-                <Typography variant="h6">Add a new offer</Typography>
+              <form onSubmit={this.submitForm}>
+                <Typography variant="h6" className={styles.title}>
+                  Add a new offer
+                </Typography>
 
                 <Grid item align="center" xs={12} sm={9}>
                   <TextField
@@ -172,10 +171,12 @@ class Component extends React.Component {
                       <MenuItem value="Ciudad de Mexico">
                         Ciudad de Mexico
                       </MenuItem>
-                      <MenuItem value="Huasteca Potosina">Huasteca</MenuItem>
+                      <MenuItem value="Huasteca Potosina">
+                        Huasteca Potosina
+                      </MenuItem>
                       <MenuItem value="Jalisco">Jalisco</MenuItem>
                       <MenuItem value="Oaxaca">Oaxaca</MenuItem>
-                      <MenuItem value="Riviera">Riviera Maya</MenuItem>
+                      <MenuItem value="Riviera Maya">Riviera Maya</MenuItem>
                     </Select>
                   </FormControl>
                 </Grid>
@@ -193,7 +194,12 @@ class Component extends React.Component {
                   />
                 </Grid>
                 <Grid item xs={12} sm={9} align="center">
-                  <Button variant="contained" type="submit" color="secondary">
+                  <Button
+                    variant="contained"
+                    type="submit"
+                    color="secondary"
+                    className={styles.button}
+                  >
                     Submit
                   </Button>
                 </Grid>

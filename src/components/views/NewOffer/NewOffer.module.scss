@@ -1,4 +1,16 @@
-@import '../../../styles/settings.scss';
+@import "../../../styles/settings.scss";
+@import "../../../styles/mixins.scss";
 
-// .root {
-// }
+.root {
+  @include container;
+  .form {
+    padding: $base-size * 2;
+    .title {
+      @include mainTitle;
+    }
+    .button {
+      background-color: $color-main;
+      font-weight: bold;
+    }
+  }
+}
