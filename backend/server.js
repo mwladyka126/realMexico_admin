@@ -30,6 +30,10 @@ app.use(express.static(path.join(__dirname, "../build")));
 app.use("*", (req, res) => {
   res.sendFile(path.join(__dirname, "../build/index.html"));
 });
+app.use(function (err, req, res, next) {
+  console.log("This is the invalid field ->", err.field);
+  next(err);
+});
 
 /* MONGOOSE */
 mongoose.connect(

@@ -47,7 +47,7 @@ const Component = ({ className, children, offer, fetchOffer, deleteOffer }) => {
                 variant="contained"
                 className={styles.button}
                 text="delete"
-                onClick={deleteOffer(offer._id)}
+                onClick={deleteOffer()}
               >
                 {" "}
                 <Link to={""} className={styles.link}>

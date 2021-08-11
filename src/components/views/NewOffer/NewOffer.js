@@ -23,7 +23,7 @@ class Component extends React.Component {
     offer: {
       title: "",
       description: "",
-      image: [],
+      image: "",
       price: "",
       region: "",
       regionId: "",
@@ -85,21 +85,18 @@ class Component extends React.Component {
     if (!error) {
       const formData = new FormData();
 
-      for (let key of [
-        "title",
-        "description",
-        "price",
-        "region",
-        "regionId",
-        "image",
-      ]) {
+      for (let key of ["title", "description", "price", "region", "regionId"]) {
         formData.append(key, offer[key]);
+        if (offer.image.length) {
+          offer.image.forEach((img) => formData.append("image", img));
+        }
       }
 
       addNewOffer(formData);
       console.log(offer);
 
       alert("New offer has been add");
+      window.location = "/";
     } else {
       alert("Please correct errors before submitting the form!");
     }
@@ -191,6 +188,7 @@ class Component extends React.Component {
                     onChange={this.setImage}
                     //singleImage={true}
                     className={styles.file}
+                    name="image"
                   />
                 </Grid>
                 <Grid item xs={12} sm={9} align="center">
