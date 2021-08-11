@@ -20,6 +20,12 @@ const Component = ({ className, children, offer, fetchOffer, deleteOffer }) => {
   useEffect(() => {
     fetchOffer();
   }, []);
+  const deleteOfferHandler = () => {
+    deleteOffer();
+    if (window.confirm("are you sure you ?")) {
+      window.location = "/";
+    }
+  };
 
   return (
     <div className={clsx(className, styles.root)}>
@@ -47,12 +53,9 @@ const Component = ({ className, children, offer, fetchOffer, deleteOffer }) => {
                 variant="contained"
                 className={styles.button}
                 text="delete"
-                onClick={deleteOffer()}
+                onClick={deleteOfferHandler}
               >
-                {" "}
-                <Link to={""} className={styles.link}>
-                  delete
-                </Link>
+                delete
               </Button>
               <Button
                 size="medium"

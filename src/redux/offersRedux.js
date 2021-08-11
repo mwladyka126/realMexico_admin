@@ -29,7 +29,7 @@ export const fetchSuccess = (payload) => ({ payload, type: FETCH_SUCCESS });
 export const fetchError = (payload) => ({ payload, type: FETCH_ERROR });
 export const addOffer = (payload) => ({ payload, type: ADD_OFFER });
 export const editOffer = (payload) => ({ payload, type: EDIT_OFFER });
-export const deleteOffer = (payload) => ({ payload, type: EDIT_OFFER });
+export const deleteOffer = (payload) => ({ payload, type: DELETE_OFFER });
 export const fetchOneOffer = (payload) => ({ payload, type: FETCH_ONE_OFFER });
 
 /* thunk creators */

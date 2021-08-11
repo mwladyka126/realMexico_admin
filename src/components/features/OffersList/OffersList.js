@@ -38,7 +38,7 @@ const Component = ({ className, children, offers, fetchOffers }) => {
   };
   useEffect(() => {
     fetchOffers();
-  }, []);
+  });
   return (
     <div className={clsx(className, styles.root)}>
       <h2 className={styles.title}>Offers</h2>
@@ -52,13 +52,13 @@ const Component = ({ className, children, offers, fetchOffers }) => {
           />
         </div>
         <div className={styles.sortInputs_show}>
-          <label htmlFor="show">Show</label>
+          <label htmlFor="show">Show offers</label>
           <select onClick={showOnPage} id="show">
             <option value="10">10</option>
             <option value="20">20</option>
+            <option value="30">30</option>
             <option value="40">40</option>
-            <option value="50">50</option>
-            <option value={offers.length}>ALL</option>
+            <option value={offers.length}>all</option>
           </select>
         </div>
       </div>

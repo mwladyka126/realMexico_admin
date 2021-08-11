@@ -87,9 +87,9 @@ class Component extends React.Component {
 
       for (let key of ["title", "description", "price", "region", "regionId"]) {
         formData.append(key, offer[key]);
-        if (offer.image.length) {
-          offer.image.forEach((img) => formData.append("image", img));
-        }
+      }
+      if (offer.image.length) {
+        offer.image.forEach((img) => formData.append("image", img));
       }
 
       addNewOffer(formData);

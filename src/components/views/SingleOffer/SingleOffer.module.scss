@@ -22,6 +22,8 @@
     .button {
       background-color: $color-background-color;
       margin: $base-size $base-size/2;
+      color: $color-text-light;
+      font-weight: bold;
     }
     .link {
       @include link;

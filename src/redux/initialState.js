@@ -9,15 +9,11 @@ export const initialState = {
       _id: "10",
       region: "CDMX",
       regionId: "cdmx",
-      title: "Ciudad de Mexico",
+      title: "",
       description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat",
       price: 3890,
-      image: [
-        "/images/offers/CDMX2.jpg",
-        "/images/offers/CDMX.jpg",
-        "/images/offers/teotihuacan.jpg",
-      ],
+      image: [],
     },
   },
   regions: {

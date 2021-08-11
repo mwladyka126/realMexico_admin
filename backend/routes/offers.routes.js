@@ -53,7 +53,7 @@ router.post("/offers/add", upload.array("image", 3), async (req, res) => {
 
     const photosSrc = [];
 
-    req.files.map((el) => photosSrc.push("images/offers/" + el.filename));
+    req.files.map((el) => photosSrc.push("/images/offers/" + el.filename));
     console.log("photosSrc", photosSrc);
     const newOffer = new Offer({
       region: region,
