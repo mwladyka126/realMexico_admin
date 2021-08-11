@@ -20,6 +20,7 @@ const FETCH_SUCCESS = createActionName("FETCH_SUCCESS");
 const FETCH_ERROR = createActionName("FETCH_ERROR");
 const ADD_OFFER = createActionName("ADD_OFFER");
 const EDIT_OFFER = createActionName("EDIT_OFFER");
+const DELETE_OFFER = createActionName("DELETE_OFFER");
 const FETCH_ONE_OFFER = createActionName("FETCH_ONE_OFFER");
 
 /* action creators */
@@ -28,6 +29,7 @@ export const fetchSuccess = (payload) => ({ payload, type: FETCH_SUCCESS });
 export const fetchError = (payload) => ({ payload, type: FETCH_ERROR });
 export const addOffer = (payload) => ({ payload, type: ADD_OFFER });
 export const editOffer = (payload) => ({ payload, type: EDIT_OFFER });
+export const deleteOffer = (payload) => ({ payload, type: EDIT_OFFER });
 export const fetchOneOffer = (payload) => ({ payload, type: FETCH_ONE_OFFER });
 
 /* thunk creators */
@@ -98,6 +100,19 @@ export const editOfferRequest = (data, id) => {
   };
 };
 
+export const deleteOfferRequest = (id) => {
+  return async (dispatch) => {
+    dispatch(fetchStarted());
+    Axios.delete(`${API_URL}/offers/${id}`)
+      .then((res) => {
+        dispatch(deleteOffer(id));
+      })
+      .catch((err) => {
+        dispatch(fetchError(err.message || true));
+      });
+  };
+};
+
 /* reducer */
 export const reducer = (statePart = [], action = {}) => {
   switch (action.type) {
@@ -146,6 +161,14 @@ export const reducer = (statePart = [], action = {}) => {
           ...statePart.data.map((offer) =>
             offer._id === action.payload._id ? action.payload : offer
           ),
+        ],
+      };
+    }
+    case DELETE_OFFER: {
+      return {
+        ...statePart,
+        data: [
+          ...statePart.data.filter((offer) => offer._id !== action.payload._id),
         ],
       };
     }

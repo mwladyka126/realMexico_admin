@@ -75,8 +75,20 @@ router.post("/offers/add", upload.array("image", 3), async (req, res) => {
 router.get("/offers/:id", async (req, res) => {
   try {
     const result = await Offer.findById(req.params.id);
-    if (!result) res.status(404).json({ offer: "Not found" });
+    if (!result) res.status(404).json({ Offer: "Not found" });
     else res.json(result);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+router.delete("/offers/:id", async (req, res) => {
+  try {
+    const result = await Offer.findById(req.params.id);
+    if (result) {
+      await Offer.deleteOne({ _id: req.params.id });
+      res.json({ message: "ok" });
+    } else res.status(404).json({ message: "Not found..." });
   } catch (err) {
     res.status(500).json(err);
   }

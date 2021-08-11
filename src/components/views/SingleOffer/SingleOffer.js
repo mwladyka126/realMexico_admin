@@ -7,16 +7,21 @@ import Paper from "@material-ui/core/Paper";
 
 import clsx from "clsx";
 
-import { getOne, fetchOneOfferFromAPI } from "../../../redux/offersRedux.js";
+import {
+  getOne,
+  fetchOneOfferFromAPI,
+  deleteOfferRequest,
+} from "../../../redux/offersRedux.js";
 import { connect } from "react-redux";
 
 import styles from "./SingleOffer.module.scss";
 
-const Component = ({ className, children, offer, fetchOffer }) => (
+const Component = ({ className, children, offer, fetchOffer, deleteOffer }) => {
   useEffect(() => {
     fetchOffer();
-  }, []),
-  (
+  }, []);
+
+  return (
     <div className={clsx(className, styles.root)}>
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
@@ -42,7 +47,9 @@ const Component = ({ className, children, offer, fetchOffer }) => (
                 variant="contained"
                 className={styles.button}
                 text="delete"
+                onClick={deleteOffer(offer._id)}
               >
+                {" "}
                 <Link to={""} className={styles.link}>
                   delete
                 </Link>
@@ -74,8 +81,8 @@ const Component = ({ className, children, offer, fetchOffer }) => (
         </Grid>
       </Grid>
     </div>
-  )
-);
+  );
+};
 
 Component.propTypes = {
   children: PropTypes.node,
@@ -87,6 +94,7 @@ const mapStateToProps = (state) => ({
 });
 const mapDispatchToProps = (dispatch, props) => ({
   fetchOffer: () => dispatch(fetchOneOfferFromAPI(props.match.params.offerId)),
+  deleteOffer: () => dispatch(deleteOfferRequest(props.match.params.offerId)),
 });
 
 const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
