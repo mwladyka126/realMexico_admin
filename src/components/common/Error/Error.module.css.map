@@ -1,0 +1,10 @@
+{
+    "version": 3,
+    "mappings": "ACAA,OAAO,CAAC,4EAAI;AACZ,OAAO,CAAC,mEAAI;AAIZ,YAAY;AAcZ,WAAW;AAIX,gBAAgB;ADtBhB,AACE,KADG,CACH,MAAM,CAAC;EACL,KAAK,EAAE,IAAI;EACX,MAAM,EAAE,KAAK;CACd",
+    "sources": [
+        "Error.module.scss",
+        "../../../styles/settings.scss"
+    ],
+    "names": [],
+    "file": "Error.module.css"
+}

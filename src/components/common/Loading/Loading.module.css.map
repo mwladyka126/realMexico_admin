@@ -1,0 +1,10 @@
+{
+    "version": 3,
+    "mappings": "ACAA,OAAO,CAAC,4EAAI;AACZ,OAAO,CAAC,mEAAI;AAIZ,YAAY;AAcZ,WAAW;AAIX,gBAAgB;ADrBhB,AACE,KADG,CACH,QAAQ,CAAC;EACP,KAAK,EAAE,IAAI;EACX,MAAM,EAAE,KAAK;CACd",
+    "sources": [
+        "Loading.module.scss",
+        "../../../styles/settings.scss"
+    ],
+    "names": [],
+    "file": "Loading.module.css"
+}
