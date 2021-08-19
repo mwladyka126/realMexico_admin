@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import clsx from "clsx";
 import { Link } from "react-router-dom";
@@ -14,47 +14,50 @@ import MenuItem from "@material-ui/core/MenuItem";
 import ImageUploader from "react-images-upload";
 
 import { connect } from "react-redux";
-import { addOfferRequest } from "../../../redux/offersRedux.js";
+import {
+  addOfferRequest,
+  getOne,
+  fetchOneOfferFromAPI,
+} from "../../../redux/offersRedux.js";
 
 import styles from "./OfferFormular.module.scss";
 
-class Component extends React.Component {
-  state = {
-    offer: {
-      title: "",
-      description: "",
-      image: "",
-      price: "",
-      region: "",
-      regionId: "",
-    },
-  };
-  setImage = (files) => {
-    const { offer } = this.state;
-    console.log(files);
-    if (files) this.setState({ offer: { ...offer, image: files } });
-    else this.setState({ offer: { ...offer, image: null } });
-  };
+const Component = ({
+  className,
+  children,
+  offer,
+  fetchOfferToEdit,
+  addNewOffer,
+}) => {
+  useEffect(() => {
+    fetchOfferToEdit();
+  }, []);
+  const [title, setTitle] = useState(offer.title || "");
+  const [description, setDescription] = useState(offer.description || "");
+  const [image, setImage] = useState(offer.image || "");
+  const [price, setPrice] = useState(offer.price || "");
+  const [region, setRegion] = useState(offer.region || "");
+  const [regionId, setRegionId] = useState(offer.regionId || "");
 
-  handleChange = (event) => {
-    const { offer } = this.state;
-
-    this.setState({
-      offer: { ...offer, [event.target.name]: event.target.value },
-    });
+  const handleImage = (files) => {
+    setImage(files);
   };
 
-  handlePrice = (event) => {
-    const { offer } = this.state;
-
-    this.setState({
-      offer: { ...offer, [event.target.name]: parseInt(event.target.value) },
-    });
+  const handlePrice = (event) => {
+    setPrice(parseInt(event.target.value));
+  };
+  const handleTitle = (event) => {
+    setTitle(event.target.value);
   };
 
-  submitForm = (e) => {
-    const { offer } = this.state;
-    const { addNewOffer } = this.props;
+  const handleDescription = (event) => {
+    setDescription(event.target.value);
+  };
+  const handleRegion = (event) => {
+    setRegion(event.target.value);
+  };
+
+  const submitForm = (e) => {
     e.preventDefault();
     let error = null;
 
@@ -85,11 +88,14 @@ class Component extends React.Component {
     if (!error) {
       const formData = new FormData();
 
-      for (let key of ["title", "description", "price", "region", "regionId"]) {
-        formData.append(key, offer[key]);
-      }
-      if (offer.image.length) {
-        offer.image.forEach((img) => formData.append("image", img));
+      formData.append("title", title);
+      formData.append("description", description);
+      formData.append("price", price);
+      formData.append("region", region);
+      formData.append("regionId", regionId);
+
+      if (image.length) {
+        image.forEach((img) => formData.append("image", img));
       }
 
       addNewOffer(formData);
@@ -101,129 +107,129 @@ class Component extends React.Component {
       alert("Please correct errors before submitting the form!");
     }
   };
-  render() {
-    const { className } = this.props;
-    const { offer } = this.state;
-    return (
-      <div className={clsx(className, styles.root)}>
-        <Grid container align="center" justify="center">
-          <Grid item align="center" xs={12} sm={9}>
-            <Paper className={styles.form}>
-              <form onSubmit={this.submitForm}>
-                <Typography variant="h6" className={styles.title}>
-                  Add a new offer
-                </Typography>
 
-                <Grid item align="center" xs={12} sm={9}>
-                  <TextField
-                    required
-                    name="title"
-                    label="Title"
-                    variant="filled"
-                    onChange={this.handleChange}
-                    helperText="min. 10 characters"
-                    fullWidth
-                  />
-                </Grid>
-                <Grid item align="center" xs={12} sm={9}>
-                  <TextField
-                    required
-                    name="description"
-                    label="Give the full description!"
-                    variant="filled"
-                    multiline
-                    rows={4}
-                    onChange={this.handleChange}
-                    helperText="min. 200 characters"
-                    fullWidth
-                  />
-                </Grid>
+  return (
+    <div className={clsx(className, styles.root)}>
+      <Grid container align="center" justify="center">
+        <Grid item align="center" xs={12} sm={9}>
+          <Paper className={styles.form}>
+            <form onSubmit={submitForm}>
+              <Typography variant="h6" className={styles.title}>
+                Add a new offer
+              </Typography>
 
-                <Grid item align="center" xs={12} sm={9}>
-                  <TextField
-                    required
-                    name="price"
-                    label="Price per person per day"
-                    variant="filled"
-                    onChange={this.handlePrice}
-                    helperText="Price in EUR"
-                    fullWidth
-                  />
-                </Grid>
+              <Grid item align="center" xs={12} sm={9}>
+                <TextField
+                  required
+                  name="title"
+                  label="Title"
+                  variant="filled"
+                  onChange={handleTitle}
+                  helperText="min. 10 characters"
+                  fullWidth
+                  value={title}
+                />
+              </Grid>
+              <Grid item align="center" xs={12} sm={9}>
+                <TextField
+                  required
+                  name="description"
+                  label="Give the full description!"
+                  variant="filled"
+                  multiline
+                  rows={4}
+                  onChange={handleDescription}
+                  helperText="min. 200 characters"
+                  fullWidth
+                  value={description}
+                />
+              </Grid>
 
-                <Grid item align="center" xs={12} sm={9}>
-                  <FormControl fullWidth>
-                    <InputLabel id="region">Region</InputLabel>
-                    <Select
-                      labelId="region"
-                      id="region"
-                      onChange={this.handleChange}
-                      fullWidth
-                      variant="filled"
-                      name="region"
-                      value={offer.region}
-                      required
-                    >
-                      <MenuItem value="Chiapas">Chiapas</MenuItem>
-                      <MenuItem value="Ciudad de Mexico">
-                        Ciudad de Mexico
-                      </MenuItem>
-                      <MenuItem value="Huasteca Potosina">
-                        Huasteca Potosina
-                      </MenuItem>
-                      <MenuItem value="Jalisco">Jalisco</MenuItem>
-                      <MenuItem value="Oaxaca">Oaxaca</MenuItem>
-                      <MenuItem value="Riviera Maya">Riviera Maya</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Grid>
-                <Grid item xs={12} sm={9} className={styles.paperCard__item}>
-                  <Typography align="center">Add image</Typography>
-                  <ImageUploader
-                    withIcon={true}
-                    buttonText="Choose image"
-                    imgExtension={[".jpg", ".gif", ".png", ".jpeg", ".jfif"]}
-                    maxFileSize={5242880}
-                    withPreview={true}
-                    onChange={this.setImage}
-                    //singleImage={true}
-                    className={styles.file}
-                    name="image"
-                  />
-                </Grid>
-                <Grid item xs={12} sm={9} align="center">
-                  <Button
-                    variant="contained"
-                    type="submit"
-                    color="secondary"
-                    className={styles.button}
+              <Grid item align="center" xs={12} sm={9}>
+                <TextField
+                  required
+                  name="price"
+                  label="Price per person per day"
+                  variant="filled"
+                  onChange={handlePrice}
+                  helperText="Price in EUR"
+                  fullWidth
+                  value={price}
+                />
+              </Grid>
+
+              <Grid item align="center" xs={12} sm={9}>
+                <FormControl fullWidth>
+                  <InputLabel id="region">Region</InputLabel>
+                  <Select
+                    labelId="region"
+                    id="region"
+                    onChange={handleRegion}
+                    fullWidth
+                    variant="filled"
+                    name="region"
+                    value={region}
+                    required
                   >
-                    Submit
-                  </Button>
-                </Grid>
-              </form>
-            </Paper>
-          </Grid>
+                    <MenuItem value="Chiapas">Chiapas</MenuItem>
+                    <MenuItem value="Ciudad de Mexico">
+                      Ciudad de Mexico
+                    </MenuItem>
+                    <MenuItem value="Huasteca Potosina">
+                      Huasteca Potosina
+                    </MenuItem>
+                    <MenuItem value="Jalisco">Jalisco</MenuItem>
+                    <MenuItem value="Oaxaca">Oaxaca</MenuItem>
+                    <MenuItem value="Riviera Maya">Riviera Maya</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={12} sm={9} className={styles.paperCard__item}>
+                <Typography align="center">Add image</Typography>
+                <ImageUploader
+                  withIcon={true}
+                  buttonText="Choose image"
+                  imgExtension={[".jpg", ".gif", ".png", ".jpeg", ".jfif"]}
+                  maxFileSize={5242880}
+                  withPreview={true}
+                  onChange={handleImage}
+                  //singleImage={true}
+                  className={styles.file}
+                  name="image"
+                />
+              </Grid>
+              <Grid item xs={12} sm={9} align="center">
+                <Button
+                  variant="contained"
+                  type="submit"
+                  color="secondary"
+                  className={styles.button}
+                >
+                  Submit
+                </Button>
+              </Grid>
+            </form>
+          </Paper>
         </Grid>
-      </div>
-    );
-  }
-}
+      </Grid>
+    </div>
+  );
+};
 
 Component.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
 };
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => ({
+  offer: getOne(state),
+});
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = (dispatch, props) => ({
+  fetchOfferToEdit: () =>
+    dispatch(fetchOneOfferFromAPI(props.match.params.offerId)),
   addNewOffer: (offer) => dispatch(addOfferRequest(offer)),
 });
 
 const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
 
-export {
-  Component as OfferFormular,
-  // Container as OfferFormular,
-  Component as OfferFormularComponent,
-};
+export { Container as OfferFormular, Component as OfferFormularComponent };
