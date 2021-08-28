@@ -49,9 +49,19 @@ const App = () => (
               />
               <Route exact path="/bookings/:id/edit" component={EditBooking} />
               <Route exact path="/offers" component={OffersOverview} />
-              <Route exact path="/offers/add" component={NewOffer} />
+              <Route
+                exact
+                path="/offers/add"
+                render={(props) => (
+                  <OfferFormular {...props} toBeEdit={false} />
+                )}
+              />
               <Route exact path="/offers/:offerId" component={SingleOffer} />
-              <Route exact path="/offers/:id/edit" component={OfferFormular} />
+              <Route
+                exact
+                path="/offers/:id/edit"
+                render={(props) => <OfferFormular {...props} toBeEdit={true} />}
+              />
               <Route path="*" component={NotFound} />
             </Switch>
           </MainLayout>

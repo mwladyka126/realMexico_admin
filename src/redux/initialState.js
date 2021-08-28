@@ -6,13 +6,12 @@ export const initialState = {
       error: false,
     },
     oneOffer: {
-      _id: "10",
-      region: "CDMX",
-      regionId: "cdmx",
+      _id: "1111",
+      region: "",
+      regionId: "",
       title: "",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat",
-      price: 3890,
+      description: "",
+      price: "",
       image: [],
     },
   },

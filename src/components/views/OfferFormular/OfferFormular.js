@@ -18,6 +18,8 @@ import {
   addOfferRequest,
   getOne,
   fetchOneOfferFromAPI,
+  editOfferRequest,
+  editOffer,
 } from "../../../redux/offersRedux.js";
 
 import styles from "./OfferFormular.module.scss";
@@ -28,16 +30,22 @@ const Component = ({
   offer,
   fetchOfferToEdit,
   addNewOffer,
+  toBeEdit,
 }) => {
   useEffect(() => {
-    fetchOfferToEdit();
+    if (toBeEdit) {
+      fetchOfferToEdit();
+      console.log(offer);
+    }
   }, []);
-  const [title, setTitle] = useState(offer.title || "");
-  const [description, setDescription] = useState(offer.description || "");
-  const [image, setImage] = useState(offer.image || "");
-  const [price, setPrice] = useState(offer.price || "");
-  const [region, setRegion] = useState(offer.region || "");
-  const [regionId, setRegionId] = useState(offer.regionId || "");
+  const [title, setTitle] = useState(toBeEdit ? offer.title : "");
+  const [description, setDescription] = useState(
+    toBeEdit ? offer.description : ""
+  );
+  const [image, setImage] = useState(toBeEdit ? offer.image : "");
+  const [price, setPrice] = useState(toBeEdit ? offer.price : "");
+  const [region, setRegion] = useState(toBeEdit ? offer.region : "");
+  const [regionId, setRegionId] = useState(toBeEdit ? offer.regionId : "");
 
   const handleImage = (files) => {
     setImage(files);
@@ -48,6 +56,7 @@ const Component = ({
   };
   const handleTitle = (event) => {
     setTitle(event.target.value);
+    console.log(event.target.value);
   };
 
   const handleDescription = (event) => {
@@ -61,29 +70,29 @@ const Component = ({
     e.preventDefault();
     let error = null;
 
-    if (offer.title.length < 10) {
+    if (title.length < 10) {
       alert("The title is too short");
       error = "text too short";
-    } else if (offer.description.length < 2) {
+    } else if (description.length < 2) {
       alert("The content is too short");
       error = "description too short";
-    } else if (!offer.region) {
+    } else if (!region) {
       alert("You have to choose status");
       error = "no region chosen";
     }
 
-    if (offer.region === "Chiapas") {
-      offer.regionId = "chiapas";
-    } else if (offer.region === "Ciudad de Mexico") {
-      offer.regionId = "cdmx";
-    } else if (offer.region === "Jalisco") {
-      offer.regionId = "jalisco";
-    } else if (offer.region === "Huasteca Potosina") {
-      offer.regionId = "huasteca";
-    } else if (offer.region === "Oaxaca") {
-      offer.regionId = "oaxaca";
-    } else if (offer.region === "Riviera Maya") {
-      offer.regionId = "rivieramaya";
+    if (region === "Chiapas") {
+      setRegionId("chiapas");
+    } else if (region === "Ciudad de Mexico") {
+      setRegionId("cdmx");
+    } else if (region === "Jalisco") {
+      setRegionId("jalisco");
+    } else if (region === "Huasteca Potosina") {
+      setRegionId("huasteca");
+    } else if (region === "Oaxaca") {
+      setRegionId("oaxaca");
+    } else if (region === "Riviera Maya") {
+      setRegionId("rivieramaya");
     }
     if (!error) {
       const formData = new FormData();
@@ -97,12 +106,18 @@ const Component = ({
       if (image.length) {
         image.forEach((img) => formData.append("image", img));
       }
+      if (toBeEdit) {
+        editOffer(formData, offer._id);
+        console.log("edytue");
+        alert("New offer has been edit");
+        window.location = "/";
+      } else {
+        addNewOffer(formData);
+        console.log(formData);
 
-      addNewOffer(formData);
-      console.log(offer);
-
-      alert("New offer has been add");
-      window.location = "/";
+        alert("New offer has been add");
+        window.location = "/";
+      }
     } else {
       alert("Please correct errors before submitting the form!");
     }
@@ -114,9 +129,15 @@ const Component = ({
         <Grid item align="center" xs={12} sm={9}>
           <Paper className={styles.form}>
             <form onSubmit={submitForm}>
-              <Typography variant="h6" className={styles.title}>
-                Add a new offer
-              </Typography>
+              {toBeEdit ? (
+                <Typography variant="h6" className={styles.title}>
+                  Edit the offer
+                </Typography>
+              ) : (
+                <Typography variant="h6" className={styles.title}>
+                  Add a new offer
+                </Typography>
+              )}
 
               <Grid item align="center" xs={12} sm={9}>
                 <TextField
@@ -228,6 +249,7 @@ const mapDispatchToProps = (dispatch, props) => ({
   fetchOfferToEdit: () =>
     dispatch(fetchOneOfferFromAPI(props.match.params.offerId)),
   addNewOffer: (offer) => dispatch(addOfferRequest(offer)),
+  editOffer: (value) => dispatch(editOfferRequest(value)),
 });
 
 const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
