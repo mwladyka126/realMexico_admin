@@ -42,19 +42,18 @@ router.get("/offers", async (req, res) => {
     else res.json(result);
   } catch (err) {
     res.status(500).json(err);
+    console.log(err);
   }
 });
 
 router.post("/offers/add", upload.array("image", 3), async (req, res) => {
   try {
     const { region, regionId, title, description, price } = req.body;
-    console.log("req.body", req.body);
-    console.log("req.files", req.files);
 
     const photosSrc = [];
 
     req.files.map((el) => photosSrc.push("/images/offers/" + el.filename));
-    console.log("photosSrc", photosSrc);
+
     const newOffer = new Offer({
       region: region,
       regionId: regionId,
@@ -72,6 +71,37 @@ router.post("/offers/add", upload.array("image", 3), async (req, res) => {
   }
 });
 
+router.put("/offers/:id/edit", upload.array("image", 3), async (req, res) => {
+  try {
+    const { region, regionId, title, description, price } = req.body;
+
+    const photosSrc = [];
+
+    req.files.map((el) => photosSrc.push("/images/offers/" + el.filename));
+
+    const offerToEdit = await Offer.findById(req.params.id);
+    if (offerToEdit) {
+      const changedOffer = await Offer.updateOne(
+        { _id: req.params.id },
+        {
+          $set: {
+            region: region,
+            regionId: regionId,
+            title: title,
+            description: description,
+            image: photosSrc,
+            price: price,
+          },
+        }
+      );
+      res.json(changedOffer);
+    } else res.status(404).json({ message: "Not found..." });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: err });
+  }
+});
+
 router.get("/offers/:id", async (req, res) => {
   try {
     const result = await Offer.findById(req.params.id);
@@ -79,6 +109,7 @@ router.get("/offers/:id", async (req, res) => {
     else res.json(result);
   } catch (err) {
     res.status(500).json(err);
+    console.log(err);
   }
 });
 
@@ -91,6 +122,7 @@ router.delete("/offers/:id", async (req, res) => {
     } else res.status(404).json({ message: "Not found..." });
   } catch (err) {
     res.status(500).json(err);
+    console.log(err);
   }
 });
 

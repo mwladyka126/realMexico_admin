@@ -47,7 +47,11 @@ const App = () => (
                 path="/bookings/:bookingId"
                 component={SingleBooking}
               />
-              <Route exact path="/bookings/:id/edit" component={EditBooking} />
+              <Route
+                exact
+                path="/bookings/:bookingId/edit"
+                component={EditBooking}
+              />
               <Route exact path="/offers" component={OffersOverview} />
               <Route
                 exact
@@ -59,7 +63,7 @@ const App = () => (
               <Route exact path="/offers/:offerId" component={SingleOffer} />
               <Route
                 exact
-                path="/offers/:id/edit"
+                path="/offers/:offerId/edit"
                 render={(props) => <OfferFormular {...props} toBeEdit={true} />}
               />
               <Route path="*" component={NotFound} />

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import clsx from "clsx";
-import { Link } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import TextField from "@material-ui/core/TextField";
@@ -19,7 +18,6 @@ import {
   getOne,
   fetchOneOfferFromAPI,
   editOfferRequest,
-  editOffer,
 } from "../../../redux/offersRedux.js";
 
 import styles from "./OfferFormular.module.scss";
@@ -30,12 +28,12 @@ const Component = ({
   offer,
   fetchOfferToEdit,
   addNewOffer,
+  editOffer,
   toBeEdit,
 }) => {
   useEffect(() => {
     if (toBeEdit) {
       fetchOfferToEdit();
-      console.log(offer);
     }
   }, []);
   const [title, setTitle] = useState(toBeEdit ? offer.title : "");
@@ -64,6 +62,19 @@ const Component = ({
   };
   const handleRegion = (event) => {
     setRegion(event.target.value);
+    if (event.target.value === "Chiapas") {
+      setRegionId("chiapas");
+    } else if (event.target.value === "Ciudad de Mexico") {
+      setRegionId("cdmx");
+    } else if (event.target.value === "Jalisco") {
+      setRegionId("jalisco");
+    } else if (event.target.value === "Huasteca Potosina") {
+      setRegionId("huasteca");
+    } else if (event.target.value === "Oaxaca") {
+      setRegionId("oaxaca");
+    } else if (event.target.value === "Riviera Maya") {
+      setRegionId("rivieramaya");
+    }
   };
 
   const submitForm = (e) => {
@@ -73,7 +84,7 @@ const Component = ({
     if (title.length < 10) {
       alert("The title is too short");
       error = "text too short";
-    } else if (description.length < 2) {
+    } else if (description.length < 20) {
       alert("The content is too short");
       error = "description too short";
     } else if (!region) {
@@ -81,19 +92,6 @@ const Component = ({
       error = "no region chosen";
     }
 
-    if (region === "Chiapas") {
-      setRegionId("chiapas");
-    } else if (region === "Ciudad de Mexico") {
-      setRegionId("cdmx");
-    } else if (region === "Jalisco") {
-      setRegionId("jalisco");
-    } else if (region === "Huasteca Potosina") {
-      setRegionId("huasteca");
-    } else if (region === "Oaxaca") {
-      setRegionId("oaxaca");
-    } else if (region === "Riviera Maya") {
-      setRegionId("rivieramaya");
-    }
     if (!error) {
       const formData = new FormData();
 
@@ -107,9 +105,9 @@ const Component = ({
         image.forEach((img) => formData.append("image", img));
       }
       if (toBeEdit) {
-        editOffer(formData, offer._id);
-        console.log("edytue");
-        alert("New offer has been edit");
+        editOffer(formData);
+
+        alert("The offer has been updated");
         window.location = "/";
       } else {
         addNewOffer(formData);
@@ -249,7 +247,8 @@ const mapDispatchToProps = (dispatch, props) => ({
   fetchOfferToEdit: () =>
     dispatch(fetchOneOfferFromAPI(props.match.params.offerId)),
   addNewOffer: (offer) => dispatch(addOfferRequest(offer)),
-  editOffer: (value) => dispatch(editOfferRequest(value)),
+  editOffer: (value) =>
+    dispatch(editOfferRequest(value, props.match.params.offerId)),
 });
 
 const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
