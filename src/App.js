@@ -19,10 +19,8 @@ import { NewBooking } from "./components/views/NewBooking/NewBooking";
 import { EditBooking } from "./components/views/EditBooking/EditBooking";
 import { SingleBooking } from "./components/views/SingleBooking/SingleBooking";
 import { SingleOffer } from "./components/views/SingleOffer/SingleOffer";
-import { EditOffer } from "./components/views/EditOffer/EditOffer";
 import { OfferFormular } from "./components/views/OfferFormular/OfferFormular";
 import { OffersOverview } from "./components/views/OffersOverview/OffersOverview";
-import { NewOffer } from "./components/views/NewOffer/NewOffer";
 import { NotFound } from "./components/views/NotFound/NotFound";
 
 const theme = createMuiTheme({
