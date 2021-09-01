@@ -19,7 +19,7 @@ import {
 } from "../../../redux/bookingsRedux.js";
 
 const Component = ({ className, bookings, fetchBookings, fullList }) => {
-  const [bookingsOnPage, setBookingOnPage] = useState(bookings);
+  const [bookingsOnPage, setBookingOnPage] = useState(bookings.slice(0, 10));
   const [term, setTerm] = useState("");
 
   const showOnPage = (event) => {

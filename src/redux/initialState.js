@@ -34,7 +34,14 @@ export const initialState = {
         phone: "",
       },*/
     ],
-    oneBooking: {},
+    oneBooking: {
+      trips: [{}],
+      created: "",
+      firstName: "",
+      lastName: "",
+      email: "",
+      phone: "",
+    },
     loading: {
       active: false,
       error: false,

@@ -94,7 +94,6 @@ const Component = ({
 
     if (!error) {
       const formData = new FormData();
-
       formData.append("title", title);
       formData.append("description", description);
       formData.append("price", price);
@@ -106,13 +105,10 @@ const Component = ({
       }
       if (toBeEdit) {
         editOffer(formData);
-
         alert("The offer has been updated");
         window.location = "/";
       } else {
         addNewOffer(formData);
-        console.log(formData);
-
         alert("New offer has been add");
         window.location = "/";
       }

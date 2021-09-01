@@ -21,7 +21,7 @@ import {
 import styles from "./OffersList.module.scss";
 
 const Component = ({ className, children, offers, fetchOffers }) => {
-  const [offersOnPage, setOffersOnPage] = useState(offers);
+  const [offersOnPage, setOffersOnPage] = useState(offers.slice(0, 10));
   const [term, setTerm] = useState("");
 
   const showOnPage = (event) => {

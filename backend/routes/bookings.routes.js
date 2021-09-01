@@ -15,7 +15,7 @@ function escape(html) {
 router.get("/bookings", async (req, res) => {
   try {
     const result = await Booking.find()
-      .select(" lastName firstName email phone created trips")
+      .select(" lastName firstName email phone created trips ")
       .sort({ created: -1 });
     if (!result) res.status(404).json({ booking: "Not found" });
     else res.json(result);

@@ -10,14 +10,29 @@ import { connect } from "react-redux";
 
 import styles from "./SingleBooking.module.scss";
 
-const Component = ({ className, children, booking, fetchBooking }) => (
+const Component = ({ className, children, booking, fetchBooking, match }) => (
   useEffect(() => {
     fetchBooking();
-  }, []),
+    console.log(booking);
+  }, [match.params.bookingId]),
   (
     <div className={clsx(className, styles.root)}>
-      <h2>SingleBooking</h2>
-      <p>{booking.lastName} </p>
+      <h2>Booking details</h2>
+      <p>{booking.lastName}</p>
+      <p>{booking.firstName}</p>
+      <p>{booking.email}</p>
+      <p>{booking.phone}</p>
+      <p>
+        {booking.trips.map((trip) => (
+          <>
+            <p>{trip.title}</p>
+            <p>{trip.people}</p>
+            <p>{trip.days}</p>
+            <p>{trip.price}</p>
+            <p>{trip.totalPrice}</p>
+          </>
+        ))}
+      </p>
     </div>
   )
 );
