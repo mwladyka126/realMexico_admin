@@ -1,4 +1,40 @@
-@import '../../../styles/settings.scss';
+@import "../../../styles/settings.scss";
+@import "../../../styles/mixins.scss";
 
-// .root {
-// }
+.root {
+  @include container;
+  .title {
+    @include mainTitle;
+    padding: $base-size;
+    text-align: center;
+  }
+  .contact {
+    //padding: $base-size;
+    @include wrapper;
+    flex-direction: column;
+    &_title {
+      text-align: center;
+    }
+    &_element {
+      @include wrapper;
+      p {
+        margin: 0 $base-size;
+      }
+    }
+  }
+  .trip {
+    @extend .contact;
+    &_title {
+      text-align: center;
+    }
+    &_element {
+      @include wrapper;
+      p {
+        margin: 0 $base-size/2;
+      }
+    }
+  }
+  .value {
+    text-align: center;
+  }
+}
