@@ -52,7 +52,7 @@ const Component = ({ className, children, offers, fetchOffers }) => {
           />
         </div>
         <div className={styles.sortInputs_show}>
-          <label htmlFor="show">Show offers</label>
+          <label htmlFor="show">Show </label>
           <select onClick={showOnPage} id="show">
             <option value="10">10</option>
             <option value="20">20</option>
@@ -65,12 +65,14 @@ const Component = ({ className, children, offers, fetchOffers }) => {
       <Paper>
         <TableContainer className={styles.scrollWrapper}>
           <Table className={styles.table}>
-            <TableHead>
+            <TableHead className={styles.table_head}>
               <TableRow>
-                <TableCell>Title</TableCell>
-                <TableCell>Region</TableCell>
-                <TableCell>Price</TableCell>
-                <TableCell>Details</TableCell>
+                <TableCell className={styles.table_head_cell}>Title</TableCell>
+                <TableCell className={styles.table_head_cell}>Region</TableCell>
+                <TableCell className={styles.table_head_cell}>Price</TableCell>
+                <TableCell className={styles.table_head_cell}>
+                  Details
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>

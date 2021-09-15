@@ -7,7 +7,7 @@
   }
   .sortInputs {
     @include wrapper;
-    justify-content: flex-start;
+    justify-content: space-around;
     &_search {
       margin: $base-size;
       input {
@@ -24,6 +24,16 @@
   }
   .scrollWrapper {
     overflow-x: auto !important;
+    .table {
+      &_head {
+        &_cell {
+          font-family: $font-header;
+          letter-spacing: 3px;
+          font-weight: 600;
+          color: $color-text-dark;
+        }
+      }
+    }
   }
   .button {
     background-color: $color-background-color;

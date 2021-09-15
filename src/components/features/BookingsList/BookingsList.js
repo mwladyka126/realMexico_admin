@@ -65,14 +65,24 @@ const Component = ({ className, bookings, fetchBookings, fullList }) => {
       <Paper>
         <TableContainer className={styles.scrollWrapper}>
           <Table className={styles.table}>
-            <TableHead>
+            <TableHead className={styles.table_head}>
               <TableRow>
-                <TableCell>Date</TableCell>
-                <TableCell>Name</TableCell>
-                {fullList ? <TableCell>First Name</TableCell> : null}
-                <TableCell>Email</TableCell>
-                {fullList ? <TableCell>Phone</TableCell> : null}
-                <TableCell>Details</TableCell>
+                <TableCell className={styles.table_head_cell}>Date</TableCell>
+                <TableCell className={styles.table_head_cell}>Name</TableCell>
+                {fullList ? (
+                  <TableCell className={styles.table_head_cell}>
+                    First Name
+                  </TableCell>
+                ) : null}
+                <TableCell className={styles.table_head_cell}>Email</TableCell>
+                {fullList ? (
+                  <TableCell className={styles.table_head_cell}>
+                    Phone
+                  </TableCell>
+                ) : null}
+                <TableCell className={styles.table_head_cell}>
+                  Details
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>

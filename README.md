@@ -16,4 +16,4 @@ to launch the test runner
 
 ### Short description of the project:
 
-This is a admin panel for the travel agency from the project `REALMexico`
+This is a admin panel for the travel agency from the project `REALMexico` (https://github.com/mwladyka126/REALMexico)

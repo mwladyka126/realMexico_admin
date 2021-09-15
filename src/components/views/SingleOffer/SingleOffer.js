@@ -8,8 +8,8 @@ import Paper from "@material-ui/core/Paper";
 import clsx from "clsx";
 
 import {
-    getOne,
-    fetchOneOfferFromAPI,
+  getOne,
+  fetchOneOfferFromAPI,
   deleteOfferRequest,
 } from "../../../redux/offersRedux.js";
 import { connect } from "react-redux";

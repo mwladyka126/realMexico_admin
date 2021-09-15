@@ -20,47 +20,75 @@ const Component = ({ className, children, booking, fetchBooking, match }) => {
   }, [match.params.bookingId]);
   return (
     <div className={clsx(className, styles.root)}>
-      <Grid container spacing={3}>
-        <Grid item xs={12} sm={12}>
+      <Grid container spacing={1}>
+        <Grid item xs={12}>
           <h2 className={styles.title}>Details for Booking {booking._id}</h2>
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12}>
           <Paper className={styles.contact}>
             <h3 className={styles.contact_title}>Contact</h3>
             <div className={styles.contact_element}>
-              <p>Surame: {booking.lastName}</p>
-              <p> Name: {booking.firstName}</p>
+              <p>
+                <b>Surame: </b> {booking.lastName}
+              </p>
+              <p>
+                <b> Name: </b>
+                {booking.firstName}
+              </p>
             </div>
             <div className={styles.contact_element}>
-              <p>Email: {booking.email}</p>
-              <p>Phone: {booking.phone}</p>
+              <p>
+                {" "}
+                <b>Email: </b> {booking.email}
+              </p>
+              <p>
+                <b> Phone: </b>
+                {booking.phone}
+              </p>
+            </div>
+          </Paper>
+        </Grid>
+        <Grid item xs={12}>
+          <Paper>
+            <div>
+              <p className={styles.value}>
+                <b>TOTAL ORDER VALUE: </b> {booking.orderTotalValue} EUR
+              </p>
             </div>
           </Paper>
         </Grid>
 
         {booking.trips.map((trip) => (
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={6}>
             <Paper className={styles.trip}>
               <h3 className={styles.trip_title}>Trip: {trip.title}</h3>
               <div className={styles.trip_element}>
-                <p>Persons: {trip.people}</p>
-                <p>Days: {trip.days}</p>
+                <p>
+                  {" "}
+                  <b>Persons: </b>
+                  {trip.people}
+                </p>
+                <p>
+                  {" "}
+                  <b>Days: </b>
+                  {trip.days}
+                </p>
               </div>
               <div className={styles.trip_element}>
-                <p>Price: {trip.price}</p>
-                <p>TOTAL: {trip.totalPrice}</p>
+                <p>
+                  {" "}
+                  <b>Price: </b>
+                  {trip.price} EUR
+                </p>
+                <p>
+                  {" "}
+                  <b>TOTAL: </b> {trip.totalPrice} EUR
+                </p>
               </div>
             </Paper>
           </Grid>
         ))}
       </Grid>
-      <Paper>
-        <div>
-          <p className={styles.value}>
-            TOTAL ORDER VALUE: {booking.orderTotalValue} EUR
-          </p>
-        </div>
-      </Paper>
     </div>
   );
 };
