@@ -67,5 +67,17 @@ router.get("/bookings/:id", async (req, res) => {
     res.status(500).json(err);
   }
 });
+router.delete("/bookings/:id", async (req, res) => {
+  try {
+    const result = await Booking.findById(req.params.id);
+    if (result) {
+      await Booking.deleteOne({ _id: req.params.id });
+      res.json({ message: "ok" });
+    } else res.status(404).json({ message: "Not found..." });
+  } catch (err) {
+    res.status(500).json(err);
+    console.log(err);
+  }
+});
 
 module.exports = router;

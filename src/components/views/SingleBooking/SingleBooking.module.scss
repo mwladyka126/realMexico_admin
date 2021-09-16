@@ -39,4 +39,20 @@
     text-align: center;
     padding: $base-size;
   }
+  .buttons {
+    @include wrapper;
+    justify-content: center;
+    .button {
+      background-color: $color-background-color;
+      margin: $base-size $base-size/2;
+      color: $color-text-light;
+      font-weight: bold;
+    }
+    .delete {
+      background-color: $color-error;
+    }
+    .link {
+      @include link;
+    }
+  }
 }

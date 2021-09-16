@@ -8,16 +8,30 @@ import clsx from "clsx";
 import {
   getOne,
   fetchOneBookingFromAPI,
+  deleteBookingRequest,
 } from "../../../redux/bookingsRedux.js";
 import { connect } from "react-redux";
 
 import styles from "./SingleBooking.module.scss";
 
-const Component = ({ className, children, booking, fetchBooking, match }) => {
+const Component = ({
+  className,
+  children,
+  booking,
+  fetchBooking,
+  match,
+  deleteBooking,
+}) => {
   useEffect(() => {
     fetchBooking();
     console.log(booking);
   }, [match.params.bookingId]);
+  const deleteBookingHandler = () => {
+    deleteBooking();
+    if (window.confirm("are you sure you ?")) {
+      window.location = "/";
+    }
+  };
   return (
     <div className={clsx(className, styles.root)}>
       <Grid container spacing={1}>
@@ -88,6 +102,22 @@ const Component = ({ className, children, booking, fetchBooking, match }) => {
             </Paper>
           </Grid>
         ))}
+        <Grid item xs={12} className={styles.buttons}>
+          <Button
+            size="medium"
+            variant="contained"
+            className={styles.button + " " + styles.delete}
+            text="delete"
+            onClick={deleteBookingHandler}
+          >
+            delete
+          </Button>
+          <Button size="medium" variant="contained" className={styles.button}>
+            <Link to={`/bookings/${booking._id}/edit`} className={styles.link}>
+              edit
+            </Link>
+          </Button>
+        </Grid>
       </Grid>
     </div>
   );
@@ -104,6 +134,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch, props) => ({
   fetchBooking: () =>
     dispatch(fetchOneBookingFromAPI(props.match.params.bookingId)),
+  deleteBooking: () =>
+    dispatch(deleteBookingRequest(props.match.params.bookingId)),
 });
 
 const Container = connect(mapStateToProps, mapDispatchToProps)(Component);

@@ -51,7 +51,7 @@ const Component = ({ className, children, offer, fetchOffer, deleteOffer }) => {
               <Button
                 size="medium"
                 variant="contained"
-                className={styles.button}
+                className={styles.button + " " + styles.delete}
                 text="delete"
                 onClick={deleteOfferHandler}
               >

@@ -19,6 +19,7 @@ const FETCH_START = createActionName("FETCH_START");
 const FETCH_SUCCESS = createActionName("FETCH_SUCCESS");
 const FETCH_ERROR = createActionName("FETCH_ERROR");
 const FETCH_ONE_BOOKING = createActionName("FETCH_ONE_BOOKING");
+const DELETE_BOOKING = createActionName("DELETE_BOOKING");
 
 /* action creators */
 export const fetchStarted = (payload) => ({ payload, type: FETCH_START });
@@ -28,6 +29,7 @@ export const fetchOneBooking = (payload) => ({
   payload,
   type: FETCH_ONE_BOOKING,
 });
+export const deleteBooking = (payload) => ({ payload, type: DELETE_BOOKING });
 
 /* thunk creators */
 
@@ -54,6 +56,19 @@ export const fetchOneBookingFromAPI = (id) => {
     Axios.get(`${API_URL}/bookings/${id}`)
       .then((res) => {
         dispatch(fetchOneBooking(res.data));
+      })
+      .catch((err) => {
+        dispatch(fetchError(err.message || true));
+      });
+  };
+};
+
+export const deleteBookingRequest = (id) => {
+  return async (dispatch) => {
+    dispatch(fetchStarted());
+    Axios.delete(`${API_URL}/bookings/${id}`)
+      .then((res) => {
+        dispatch(deleteBooking(id));
       })
       .catch((err) => {
         dispatch(fetchError(err.message || true));
@@ -100,6 +115,16 @@ export const reducer = (statePart = [], action = {}) => {
           error: false,
         },
         oneBooking: action.payload,
+      };
+    }
+    case DELETE_BOOKING: {
+      return {
+        ...statePart,
+        data: [
+          ...statePart.data.filter(
+            (booking) => booking._id !== action.payload._id
+          ),
+        ],
       };
     }
 
