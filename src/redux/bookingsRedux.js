@@ -18,6 +18,8 @@ const createActionName = (name) => `app/${reducerName}/${name}`;
 const FETCH_START = createActionName("FETCH_START");
 const FETCH_SUCCESS = createActionName("FETCH_SUCCESS");
 const FETCH_ERROR = createActionName("FETCH_ERROR");
+const ADD_BOOKING = createActionName("ADD_BOOKING");
+const EDIT_BOOKING = createActionName("EDIT_BOOKING");
 const FETCH_ONE_BOOKING = createActionName("FETCH_ONE_BOOKING");
 const DELETE_BOOKING = createActionName("DELETE_BOOKING");
 
@@ -29,6 +31,8 @@ export const fetchOneBooking = (payload) => ({
   payload,
   type: FETCH_ONE_BOOKING,
 });
+export const addBooking = (payload) => ({ payload, type: ADD_BOOKING });
+export const editBooking = (payload) => ({ payload, type: EDIT_BOOKING });
 export const deleteBooking = (payload) => ({ payload, type: DELETE_BOOKING });
 
 /* thunk creators */
@@ -56,6 +60,34 @@ export const fetchOneBookingFromAPI = (id) => {
     Axios.get(`${API_URL}/bookings/${id}`)
       .then((res) => {
         dispatch(fetchOneBooking(res.data));
+      })
+      .catch((err) => {
+        dispatch(fetchError(err.message || true));
+      });
+  };
+};
+
+export const addBookingRequest = (data) => {
+  return (dispatch) => {
+    dispatch(fetchStarted());
+    console.log("data", data);
+    Axios.post(`${API_URL}/bookings/add`, data)
+      .then((res) => {
+        dispatch(addBooking(data));
+      })
+      .catch((err) => {
+        dispatch(fetchError(err.message || true));
+      });
+  };
+};
+
+export const editBookingRequest = (data, id) => {
+  console.log(data);
+  return async (dispatch) => {
+    dispatch(fetchStarted());
+    Axios.put(`${API_URL}/bookings/${id}/edit`, data)
+      .then((res) => {
+        dispatch(editBooking(data));
       })
       .catch((err) => {
         dispatch(fetchError(err.message || true));
@@ -115,6 +147,23 @@ export const reducer = (statePart = [], action = {}) => {
           error: false,
         },
         oneBooking: action.payload,
+      };
+    }
+    case ADD_BOOKING: {
+      console.log("action.payload", action.payload);
+      return {
+        ...statePart,
+        data: [...statePart.data, action.payload],
+      };
+    }
+    case EDIT_BOOKING: {
+      return {
+        ...statePart,
+        data: [
+          ...statePart.data.map((booking) =>
+            booking._id === action.payload._id ? action.payload : booking
+          ),
+        ],
       };
     }
     case DELETE_BOOKING: {
